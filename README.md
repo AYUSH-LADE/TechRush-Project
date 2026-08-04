@@ -1,4 +1,4 @@
-# Campus Lost and Found
+# Campus Lost & found
  
 A web app where students can report lost or found items, search for items, and connect with the person who reported them.
  
