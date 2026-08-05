@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import api, { getBackendUrl } from '../api/axios';
+import api from '../api/axios';
+import { getImageUrl } from '../utils/getImageUrl';
 import Loader from '../components/Loader';
 import {
   MapPin,
@@ -161,7 +162,7 @@ const ItemDetail = () => {
           <div className="md:col-span-6 bg-slate-100 relative min-h-[320px] md:min-h-[480px] flex items-center justify-center overflow-hidden">
             {imageSrc ? (
               <img
-                src={imageSrc.startsWith('http') ? imageSrc : `${getBackendUrl()}${imageSrc.startsWith('/') ? '' : '/'}${imageSrc}`}
+                src={getImageUrl(imageSrc)}
                 alt={item.title}
                 className="w-full h-full object-cover"
                 onError={(e) => {

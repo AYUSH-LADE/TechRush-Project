@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { MapPin, Tag, ArrowRight, ShieldCheck, HelpCircle } from 'lucide-react';
-import { getBackendUrl } from '../api/axios';
+import { getImageUrl } from '../utils/getImageUrl';
 
 const ItemCard = ({ item }) => {
   const { _id, id, title, category, location, type, status, imageUrl, image } = item;
@@ -19,11 +19,7 @@ const ItemCard = ({ item }) => {
       <div className="relative aspect-4/3 bg-slate-100 overflow-hidden">
         {imageSrc ? (
           <img
-            src={
-              imageSrc.startsWith('http')
-                ? imageSrc
-                : `${getBackendUrl()}${imageSrc.startsWith('/') ? '' : '/'}${imageSrc}`
-            }
+            src={getImageUrl(imageSrc)}
             alt={title}
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
             onError={(e) => {

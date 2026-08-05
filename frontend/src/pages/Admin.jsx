@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import api, { getBackendUrl } from '../api/axios';
+import api from '../api/axios';
+import { getImageUrl } from '../utils/getImageUrl';
 import Loader from '../components/Loader';
 import {
   ShieldAlert,
@@ -260,9 +261,7 @@ const Admin = () => {
                                 {item.imageUrl || item.image ? (
                                   <img
                                     src={
-                                      (item.imageUrl || item.image).startsWith('http')
-                                        ? item.imageUrl || item.image
-                                        : `${getBackendUrl()}${(item.imageUrl || item.image).startsWith('/') ? '' : '/'}${item.imageUrl || item.image}`
+                                      getImageUrl(item.imageUrl || item.image)
                                     }
                                     alt={item.title}
                                     className="w-full h-full object-cover"

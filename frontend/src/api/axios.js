@@ -1,24 +1,25 @@
 import axios from 'axios';
 
-// Resolve baseURL dynamically to handle dynamic backend port shifts (e.g. port 3000 -> 3001)
+// Resolve baseURL dynamically. Key rule: use window.location.hostname so that
+// when Device B opens the app via 192.168.1.5:5173, API calls go to
+// 192.168.1.5:3000 — not localhost:3000 (which would target Device B's own machine).
 const getDynamicBaseURL = () => {
   const envUrl = import.meta.env.VITE_API_URL || import.meta.env.VITE_API_BASE_URL;
   if (envUrl) return envUrl;
 
-  // Fallback: If we run on localhost, align backend dynamically
-  if (typeof window !== 'undefined' && window.location.hostname === 'localhost') {
-    // If frontend shifted to 5174, backend likely shifted to 3001
-    const backendPort = window.location.port === '5174' ? '3001' : '3000';
-    return `http://localhost:${backendPort}/api`;
+  if (typeof window !== 'undefined') {
+    const { hostname, port } = window.location;
+    const backendPort = port === '5174' ? '3001' : '3000';
+    return `http://${hostname}:${backendPort}/api`;
   }
+
   return 'http://localhost:3000/api';
 };
 
 const baseURL = getDynamicBaseURL();
 
-export const getBackendUrl = () => {
-  return baseURL.replace(/\/api$/, '');
-};
+// Keep getBackendUrl for legacy callers — will be replaced by getImageUrl utility
+export const getBackendUrl = () => baseURL.replace(/\/api$/, '');
 
 const api = axios.create({
   baseURL,
