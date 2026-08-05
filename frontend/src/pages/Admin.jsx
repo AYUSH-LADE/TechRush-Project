@@ -32,7 +32,7 @@ const Admin = () => {
       setLoading(true);
       setError(null);
       setIsUnauthorized(false);
-      const response = await api.get('/items');
+      const response = await api.get('/admin/items');
       setItems(Array.isArray(response.data) ? response.data : response.data.items || []);
     } catch (err) {
       console.error('Admin fetch failed:', err);
@@ -76,7 +76,7 @@ const Admin = () => {
     try {
       setActionLoadingId(itemId);
       setActionMessage(null);
-      await api.delete(`/admin/items/${itemId}/flag`);
+      await api.delete(`/admin/items/${itemId}`);
       setActionMessage({ type: 'success', text: 'Item post removed permanently by admin.' });
       setItemToRemove(null);
       await fetchAllItems();
