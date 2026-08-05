@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { MapPin, Tag, ArrowRight, ShieldCheck, HelpCircle } from 'lucide-react';
+import { getBackendUrl } from '../api/axios';
 
 const ItemCard = ({ item }) => {
   const { _id, id, title, category, location, type, status, imageUrl, image } = item;
@@ -21,7 +22,7 @@ const ItemCard = ({ item }) => {
             src={
               imageSrc.startsWith('http')
                 ? imageSrc
-                : `${(import.meta.env.VITE_API_URL || import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000/api').replace(/\/api$/, '')}${imageSrc.startsWith('/') ? '' : '/'}${imageSrc}`
+                : `${getBackendUrl()}${imageSrc.startsWith('/') ? '' : '/'}${imageSrc}`
             }
             alt={title}
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import api from '../api/axios';
+import api, { getBackendUrl } from '../api/axios';
 import Loader from '../components/Loader';
 import {
   ShieldAlert,
@@ -262,7 +262,7 @@ const Admin = () => {
                                     src={
                                       (item.imageUrl || item.image).startsWith('http')
                                         ? item.imageUrl || item.image
-                                        : `${(import.meta.env.VITE_API_URL || import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000/api').replace(/\/api$/, '')}${(item.imageUrl || item.image).startsWith('/') ? '' : '/'}${item.imageUrl || item.image}`
+                                        : `${getBackendUrl()}${(item.imageUrl || item.image).startsWith('/') ? '' : '/'}${item.imageUrl || item.image}`
                                     }
                                     alt={item.title}
                                     className="w-full h-full object-cover"

@@ -22,7 +22,12 @@ app.use(
     origin: (origin, callback) => {
       // Allow requests with no origin (like mobile apps or curl requests)
       if (!origin) return callback(null, true);
-      if (allowedOrigins.indexOf(origin) !== -1 || origin.startsWith("http://localhost:")) {
+      
+      // Allow localhost and local network IPs (192.168.*.*, 10.*.*.*, 172.16-31.*.*)
+      if (
+        allowedOrigins.indexOf(origin) !== -1 || 
+        origin.match(/^https?:\/\/(localhost|127\.0\.0\.1|192\.168\.\d+\.\d+|10\.\d+\.\d+\.\d+|172\.(1[6-9]|2[0-9]|3[0-1])\.\d+\.\d+):\d+$/)
+      ) {
         return callback(null, true);
       }
       return callback(new Error("Not allowed by CORS"));
@@ -39,7 +44,9 @@ app.use((req, res, next) => {
 
 app.use(express.json());
 app.use(cookieParser());
-app.use("/uploads", express.static("uploads"));
+
+const path = require("path");
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 app.use("/api/auth", require("./routes/authRoutes"));
 app.use("/api/items", require("./routes/itemRoutes"));

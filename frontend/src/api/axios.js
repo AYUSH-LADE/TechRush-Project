@@ -16,6 +16,10 @@ const getDynamicBaseURL = () => {
 
 const baseURL = getDynamicBaseURL();
 
+export const getBackendUrl = () => {
+  return baseURL.replace(/\/api$/, '');
+};
+
 const api = axios.create({
   baseURL,
   withCredentials: true,
