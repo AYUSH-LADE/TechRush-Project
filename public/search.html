@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Search Demo</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 24px;
+        background: #f5f7fb;
+      }
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+        background: white;
+        padding: 24px;
+        border-radius: 12px;
+        box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+      }
+      input {
+        width: 70%;
+        padding: 10px;
+        margin-right: 10px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+      }
+      button {
+        padding: 10px 14px;
+        border: none;
+        border-radius: 8px;
+        background: #2563eb;
+        color: white;
+        cursor: pointer;
+      }
+      .result-list {
+        margin-top: 20px;
+      }
+      .item {
+        border: 1px solid #e5e7eb;
+        border-radius: 10px;
+        padding: 12px;
+        margin-bottom: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Lost Item Search</h1>
+      <p>Describe what you lost and the app will show the most relevant possible matches.</p>
+      <input id="searchInput" placeholder="Try: phone, laptop, headphones, shoes..." />
+      <button onclick="searchItems()">Search</button>
+      <div id="results" class="result-list"></div>
+    </div>
+
+    <script>
+      async function searchItems() {
+        const query = document.getElementById('searchInput').value;
+        const results = document.getElementById('results');
+        results.innerHTML = '<p>Searching...</p>';
+
+        try {
+          const response = await fetch(`/api/search?q=${encodeURIComponent(query)}`);
+          const data = await response.json();
+
+          if (!data.items || data.items.length === 0) {
+            results.innerHTML = '<p>No relevant items found.</p>';
+            return;
+          }
+
+          results.innerHTML = data.items.map(item => `
+            <div class="item">
+              <h3>${item.title}</h3>
+              <p><strong>Category:</strong> ${item.category}</p>
+              <p>${item.description}</p>
+              <p><strong>Location hint:</strong> ${item.locationHint}</p>
+              <p><strong>Match:</strong> ${item.matchType}</p>
+              <p><strong>Relevance score:</strong> ${item.relevanceScore}</p>
+            </div>
+          `).join('');
+        } catch (error) {
+          results.innerHTML = '<p>Something went wrong.</p>';
+        }
+      }
+    </script>
+  </body>
+</html>
