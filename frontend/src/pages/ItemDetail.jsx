@@ -83,8 +83,9 @@ const ItemDetail = () => {
     );
   }
 
-  // Check ownership: reportedBy can be an object `{ _id, name, email }` or a string string ID
-  const reportedById = typeof item.reportedBy === 'object' ? item.reportedBy?._id : item.reportedBy;
+  // Check ownership safely handling null/undefined
+  const reportedBy = item.reportedBy;
+  const reportedById = reportedBy ? (typeof reportedBy === 'object' ? reportedBy._id : reportedBy) : null;
   const currentUserId = user?._id || user?.id;
 
   const isOwner = Boolean(
@@ -94,8 +95,9 @@ const ItemDetail = () => {
     String(reportedById) === String(currentUserId)
   );
 
-  const reporterName = item.reporterName || (typeof item.reportedBy === 'object' ? item.reportedBy?.name : null) || 'Campus Member';
-  const reporterEmail = item.reporterEmail || (typeof item.reportedBy === 'object' ? item.reportedBy?.email : null) || 'Contact reporter via dashboard';
+  const reporterName = item.reporterName || (reportedBy && typeof reportedBy === 'object' ? reportedBy.name : null) || 'Campus Member';
+  const reporterEmail = item.reporterEmail || (reportedBy && typeof reportedBy === 'object' ? reportedBy.email : null) || 'Contact reporter via dashboard';
+
 
   const isClaimed = item.status === 'claimed';
   const isLost = item.type === 'lost';

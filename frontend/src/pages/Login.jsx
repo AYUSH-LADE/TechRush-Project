@@ -9,6 +9,7 @@ const Login = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
+  const [role, setRole] = useState('student');
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -38,26 +39,32 @@ const Login = () => {
     try {
       setLoading(true);
       setError('');
-      const response = await api.post('/auth/login', {
+      
+      const endpoint = role === 'admin' ? '/auth/admin/login' : '/auth/login';
+      const response = await api.post(endpoint, {
         email: formData.email.trim(),
         password: formData.password,
       });
 
       const data = response.data;
-      // The backend returns a flat object: { _id, name, email, role, token }
-      // We reconstruct it to match the expected { user, token } structure if it is flat.
       const token = data.token;
       const user = data.user || (data._id ? { _id: data._id, name: data.name, email: data.email, role: data.role } : null);
 
       if (user && token) {
         login(user, token);
-        navigate(from, { replace: true });
+        if (role === 'admin') {
+          navigate('/admin', { replace: true });
+        } else {
+          navigate(from, { replace: true });
+        }
       } else {
         setError('Unexpected response format from server.');
       }
     } catch (err) {
       if (err.response && err.response.status === 401) {
         setError('Invalid email or password. Please check your credentials.');
+      } else if (err.response && err.response.status === 403) {
+        setError('Not authorized as an admin.');
       } else if (err.response && err.response.data && err.response.data.message) {
         setError(err.response.data.message);
       } else {
@@ -75,7 +82,7 @@ const Login = () => {
         <div className="bg-white rounded-3xl border border-slate-200/80 shadow-xl overflow-hidden p-8">
           
           {/* Header */}
-          <div className="text-center mb-8">
+          <div className="text-center mb-6">
             <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-blue-50 text-blue-600 mb-4 border border-blue-100">
               <Search className="w-7 h-7 stroke-[2.5]" />
             </div>
@@ -85,6 +92,27 @@ const Login = () => {
             <p className="text-sm font-medium text-slate-500 mt-1">
               Log in to manage your lost & found reports
             </p>
+          </div>
+
+          <div className="flex bg-slate-100 p-1 rounded-xl mb-6">
+            <button
+              type="button"
+              onClick={() => setRole('student')}
+              className={`flex-1 py-2 text-sm font-bold rounded-lg transition-all ${
+                role === 'student' ? 'bg-white shadow-sm text-blue-600' : 'text-slate-500 hover:text-slate-700'
+              }`}
+            >
+              Student
+            </button>
+            <button
+              type="button"
+              onClick={() => setRole('admin')}
+              className={`flex-1 py-2 text-sm font-bold rounded-lg transition-all ${
+                role === 'admin' ? 'bg-white shadow-sm text-blue-600' : 'text-slate-500 hover:text-slate-700'
+              }`}
+            >
+              Admin
+            </button>
           </div>
 
           {/* Error Alert */}
