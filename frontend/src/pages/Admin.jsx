@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import api from '../api/axios';
 import Loader from '../components/Loader';
@@ -261,7 +262,7 @@ const Admin = () => {
                                     src={
                                       (item.imageUrl || item.image).startsWith('http')
                                         ? item.imageUrl || item.image
-                                        : `${import.meta.env.VITE_API_BASE_URL.replace(/\/api$/, '')}${(item.imageUrl || item.image).startsWith('/') ? '' : '/'}${item.imageUrl || item.image}`
+                                        : `${(import.meta.env.VITE_API_URL || import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000/api').replace(/\/api$/, '')}${(item.imageUrl || item.image).startsWith('/') ? '' : '/'}${item.imageUrl || item.image}`
                                     }
                                     alt={item.title}
                                     className="w-full h-full object-cover"
@@ -319,6 +320,14 @@ const Admin = () => {
 
                           <td className="py-4 px-6 text-right">
                             <div className="flex items-center justify-end gap-2">
+                              <Link
+                                to={`/items/${itemId}`}
+                                className="px-3 py-1.5 bg-blue-50 hover:bg-blue-600 text-blue-700 hover:text-white rounded-xl text-xs font-bold border border-blue-200 transition-all flex items-center gap-1 cursor-pointer"
+                                title="View item details"
+                              >
+                                View
+                              </Link>
+
                               <button
                                 onClick={() => handleFlagItem(itemId)}
                                 disabled={actionLoadingId === itemId}

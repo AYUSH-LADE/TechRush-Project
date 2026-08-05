@@ -55,41 +55,45 @@ const Navbar = () => {
 
           {/* Desktop Nav Items */}
           <div className="hidden md:flex items-center gap-1 bg-slate-100/70 p-1.5 rounded-full border border-slate-200/60">
-            <Link
-              to="/"
-              className={`flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold transition-all ${
-                isActive('/')
-                  ? 'bg-white text-blue-700 shadow-xs'
-                  : 'text-slate-600 hover:text-slate-900 hover:bg-white/50'
-              }`}
-            >
-              <Compass className="w-4 h-4" />
-              Explore
-            </Link>
+            {!isAdmin && (
+              <>
+                <Link
+                  to="/"
+                  className={`flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold transition-all ${
+                    isActive('/')
+                      ? 'bg-white text-blue-700 shadow-xs'
+                      : 'text-slate-600 hover:text-slate-900 hover:bg-white/50'
+                  }`}
+                >
+                  <Compass className="w-4 h-4" />
+                  Explore
+                </Link>
 
-            <Link
-              to="/report"
-              className={`flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold transition-all ${
-                isActive('/report')
-                  ? 'bg-white text-blue-700 shadow-xs'
-                  : 'text-slate-600 hover:text-slate-900 hover:bg-white/50'
-              }`}
-            >
-              <PlusCircle className="w-4 h-4" />
-              Report Item
-            </Link>
+                <Link
+                  to="/report"
+                  className={`flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold transition-all ${
+                    isActive('/report')
+                      ? 'bg-white text-blue-700 shadow-xs'
+                      : 'text-slate-600 hover:text-slate-900 hover:bg-white/50'
+                  }`}
+                >
+                  <PlusCircle className="w-4 h-4" />
+                  Report Item
+                </Link>
 
-            <Link
-              to="/dashboard"
-              className={`flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold transition-all ${
-                isActive('/dashboard')
-                  ? 'bg-white text-blue-700 shadow-xs'
-                  : 'text-slate-600 hover:text-slate-900 hover:bg-white/50'
-              }`}
-            >
-              <LayoutDashboard className="w-4 h-4" />
-              Dashboard
-            </Link>
+                <Link
+                  to="/dashboard"
+                  className={`flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold transition-all ${
+                    isActive('/dashboard')
+                      ? 'bg-white text-blue-700 shadow-xs'
+                      : 'text-slate-600 hover:text-slate-900 hover:bg-white/50'
+                  }`}
+                >
+                  <LayoutDashboard className="w-4 h-4" />
+                  Dashboard
+                </Link>
+              </>
+            )}
 
             {isAdmin && (
               <Link
@@ -184,38 +188,42 @@ const Navbar = () => {
           )}
 
           <div className="space-y-1">
-            <Link
-              to="/"
-              onClick={() => setMobileMenuOpen(false)}
-              className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-all ${
-                isActive('/') ? 'bg-blue-50 text-blue-700' : 'text-slate-700 hover:bg-slate-100'
-              }`}
-            >
-              <Compass className="w-5 h-5 text-blue-600" />
-              Explore Items
-            </Link>
+            {!isAdmin && (
+              <>
+                <Link
+                  to="/"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-all ${
+                    isActive('/') ? 'bg-blue-50 text-blue-700' : 'text-slate-700 hover:bg-slate-100'
+                  }`}
+                >
+                  <Compass className="w-5 h-5 text-blue-600" />
+                  Explore Items
+                </Link>
 
-            <Link
-              to="/report"
-              onClick={() => setMobileMenuOpen(false)}
-              className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-all ${
-                isActive('/report') ? 'bg-blue-50 text-blue-700' : 'text-slate-700 hover:bg-slate-100'
-              }`}
-            >
-              <PlusCircle className="w-5 h-5 text-blue-600" />
-              Report Lost/Found
-            </Link>
+                <Link
+                  to="/report"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-all ${
+                    isActive('/report') ? 'bg-blue-50 text-blue-700' : 'text-slate-700 hover:bg-slate-100'
+                  }`}
+                >
+                  <PlusCircle className="w-5 h-5 text-blue-600" />
+                  Report Lost/Found
+                </Link>
 
-            <Link
-              to="/dashboard"
-              onClick={() => setMobileMenuOpen(false)}
-              className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-all ${
-                isActive('/dashboard') ? 'bg-blue-50 text-blue-700' : 'text-slate-700 hover:bg-slate-100'
-              }`}
-            >
-              <LayoutDashboard className="w-5 h-5 text-blue-600" />
-              My Dashboard
-            </Link>
+                <Link
+                  to="/dashboard"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-all ${
+                    isActive('/dashboard') ? 'bg-blue-50 text-blue-700' : 'text-slate-700 hover:bg-slate-100'
+                  }`}
+                >
+                  <LayoutDashboard className="w-5 h-5 text-blue-600" />
+                  My Dashboard
+                </Link>
+              </>
+            )}
 
             {isAdmin && (
               <Link

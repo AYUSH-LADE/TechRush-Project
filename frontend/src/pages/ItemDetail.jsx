@@ -161,7 +161,7 @@ const ItemDetail = () => {
           <div className="md:col-span-6 bg-slate-100 relative min-h-[320px] md:min-h-[480px] flex items-center justify-center overflow-hidden">
             {imageSrc ? (
               <img
-                src={imageSrc.startsWith('http') ? imageSrc : `${import.meta.env.VITE_API_BASE_URL.replace(/\/api$/, '')}${imageSrc.startsWith('/') ? '' : '/'}${imageSrc}`}
+                src={imageSrc.startsWith('http') ? imageSrc : `${(import.meta.env.VITE_API_URL || import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000/api').replace(/\/api$/, '')}${imageSrc.startsWith('/') ? '' : '/'}${imageSrc}`}
                 alt={item.title}
                 className="w-full h-full object-cover"
                 onError={(e) => {
