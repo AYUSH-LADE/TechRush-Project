@@ -47,7 +47,12 @@ const Signup = () => {
         password: formData.password,
       });
 
-      const { user, token } = response.data;
+      const data = response.data;
+      // The backend returns a flat object: { _id, name, email, role, token }
+      // We reconstruct it to match the expected { user, token } structure if it is flat.
+      const token = data.token;
+      const user = data.user || (data._id ? { _id: data._id, name: data.name, email: data.email, role: data.role } : null);
+
       if (user && token) {
         login(user, token);
         navigate('/dashboard', { replace: true });

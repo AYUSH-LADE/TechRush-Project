@@ -8,7 +8,35 @@ dotenv.config();
 connectDB();
 
 const app = express();
-app.use(cors());
+// Configure CORS to read from process.env.CLIENT_URL or support localhost origins dynamically
+const allowedOrigins = [
+  process.env.CLIENT_URL,
+  "http://localhost:5173",
+  "http://localhost:5174",
+  "http://localhost:3000",
+  "http://localhost:3001"
+].filter(Boolean);
+
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      // Allow requests with no origin (like mobile apps or curl requests)
+      if (!origin) return callback(null, true);
+      if (allowedOrigins.indexOf(origin) !== -1 || origin.startsWith("http://localhost:")) {
+        return callback(null, true);
+      }
+      return callback(new Error("Not allowed by CORS"));
+    },
+    credentials: true,
+  })
+);
+
+// Simple Request Logging Middleware
+app.use((req, res, next) => {
+  console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
+  next();
+});
+
 app.use(express.json());
 app.use(cookieParser());
 app.use("/uploads", express.static("uploads"));
@@ -18,8 +46,23 @@ app.use("/api/items", require("./routes/itemRoutes"));
 app.use("/api/admin", require("./routes/adminRoutes"));
 
 app.get("/", (req, res) => res.send("Lost & Found API running"));
-app.get("/health", (req, res) => {
-  res.json({ status: "ok", database: "unavailable" });
+
+// Handshake Health Endpoint
+app.get("/api/health", (req, res) => {
+  res.json({
+    success: true,
+    message: "Backend is running",
+    timestamp: new Date().toISOString(),
+  });
+});
+
+// Error handling middleware
+app.use((err, req, res, next) => {
+  console.error("Unhandled error:", err);
+  res.status(500).json({
+    success: false,
+    message: err.message || "Internal Server Error",
+  });
 });
 
 const PORT = Number(process.env.PORT) || 3000;

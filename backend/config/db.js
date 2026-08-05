@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const connectDB = async () => {
-  const uri = process.env.MONGO_URI?.trim();
+  const uri = (process.env.MONGODB_URI || process.env.MONGO_URI)?.trim();
 
   if (!uri || process.env.DISABLE_MONGO === "true") {
     console.log("MongoDB connection skipped. Set MONGO_URI and disable DISABLE_MONGO to enable database access.");

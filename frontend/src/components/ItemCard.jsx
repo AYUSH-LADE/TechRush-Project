@@ -18,7 +18,11 @@ const ItemCard = ({ item }) => {
       <div className="relative aspect-4/3 bg-slate-100 overflow-hidden">
         {imageSrc ? (
           <img
-            src={imageSrc.startsWith('http') ? imageSrc : `${import.meta.env.VITE_API_BASE_URL.replace(/\/api$/, '')}${imageSrc.startsWith('/') ? '' : '/'}${imageSrc}`}
+            src={
+              imageSrc.startsWith('http')
+                ? imageSrc
+                : `${(import.meta.env.VITE_API_URL || import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000/api').replace(/\/api$/, '')}${imageSrc.startsWith('/') ? '' : '/'}${imageSrc}`
+            }
             alt={title}
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
             onError={(e) => {
