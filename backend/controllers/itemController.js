@@ -54,7 +54,7 @@ const getItems = async (req, res) => {
 
     const items = await Item.find(filter)
       .select('-imageData') // exclude the heavy binary field from list results
-      .populate('reportedBy', 'name email')
+      .populate('reportedBy', 'name email phoneNumber')
       .sort({ createdAt: -1 });
 
     // Add a simple hasImage flag so the frontend knows whether to render <img>
@@ -76,7 +76,7 @@ const getItemById = async (req, res) => {
   try {
     const item = await Item.findById(req.params.id)
       .select('-imageData')
-      .populate('reportedBy', 'name email');
+      .populate('reportedBy', 'name email phoneNumber');
 
     if (!item) return res.status(404).json({ message: 'Item not found' });
 

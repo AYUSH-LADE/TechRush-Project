@@ -20,14 +20,14 @@ const setRefreshTokenCookie = (res, token) => {
 
 exports.registerUser = async (req, res) => {
   try {
-    const { name, email, password } = req.body;
+    const { name, email, password, phoneNumber } = req.body;
     const userExists = await User.findOne({ email });
 
     if (userExists) {
       return res.status(400).json({ message: "User already exists" });
     }
 
-    const user = await User.create({ name, email, password });
+    const user = await User.create({ name, email, password, phoneNumber });
 
     const accessToken = generateAccessToken(user._id);
     const refreshToken = generateRefreshToken(user._id);
@@ -37,6 +37,7 @@ exports.registerUser = async (req, res) => {
       _id: user._id,
       name: user.name,
       email: user.email,
+      phoneNumber: user.phoneNumber,
       role: user.role,
       token: accessToken,
     });
@@ -102,7 +103,7 @@ exports.refreshToken = async (req, res) => {
 
 exports.registerAdmin = async (req, res) => {
   try {
-    const { name, email, password, adminSecret } = req.body;
+    const { name, email, password, phoneNumber, adminSecret } = req.body;
     
     // Basic security to prevent anyone from registering as an admin
     const expectedSecret = process.env.ADMIN_SECRET || "admin123";
@@ -116,7 +117,7 @@ exports.registerAdmin = async (req, res) => {
       return res.status(400).json({ message: "User already exists" });
     }
 
-    const user = await User.create({ name, email, password, role: "admin" });
+    const user = await User.create({ name, email, password, phoneNumber, role: "admin" });
 
     const accessToken = generateAccessToken(user._id);
     const refreshToken = generateRefreshToken(user._id);
@@ -126,6 +127,7 @@ exports.registerAdmin = async (req, res) => {
       _id: user._id,
       name: user.name,
       email: user.email,
+      phoneNumber: user.phoneNumber,
       role: user.role,
       token: accessToken,
     });

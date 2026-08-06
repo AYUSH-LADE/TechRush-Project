@@ -98,6 +98,7 @@ const ItemDetail = () => {
 
   const reporterName = item.reporterName || (reportedBy && typeof reportedBy === 'object' ? reportedBy.name : null) || 'Campus Member';
   const reporterEmail = item.reporterEmail || (reportedBy && typeof reportedBy === 'object' ? reportedBy.email : null) || 'Contact reporter via dashboard';
+  const reporterPhone = item.reporterPhone || (reportedBy && typeof reportedBy === 'object' ? reportedBy.phoneNumber : null);
 
 
   const isClaimed = item.status === 'claimed';
@@ -270,6 +271,18 @@ const ItemDetail = () => {
                       {reporterEmail}
                     </a>
                   </div>
+                  {reporterPhone && (
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs font-medium text-slate-500">Phone</span>
+                      <a
+                        href={`tel:${reporterPhone}`}
+                        className="font-bold text-blue-600 hover:underline inline-flex items-center gap-1 text-xs sm:text-sm"
+                      >
+                        <PhoneCall className="w-3.5 h-3.5" />
+                        {reporterPhone}
+                      </a>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>

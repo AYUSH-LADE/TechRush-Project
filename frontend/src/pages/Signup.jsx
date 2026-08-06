@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import api from '../api/axios';
-import { User, Mail, Lock, Eye, EyeOff, UserPlus, AlertCircle, ShieldCheck } from 'lucide-react';
+import { User, Mail, Lock, Eye, EyeOff, UserPlus, AlertCircle, ShieldCheck, Phone } from 'lucide-react';
 
 const Signup = () => {
   const { login } = useAuth();
@@ -13,6 +13,7 @@ const Signup = () => {
     name: '',
     email: '',
     password: '',
+    phoneNumber: '',
     adminSecret: '',
   });
 
@@ -30,7 +31,7 @@ const Signup = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!formData.name || !formData.email || !formData.password) {
+    if (!formData.name || !formData.email || !formData.password || !formData.phoneNumber) {
       setError('Please fill in all required fields.');
       return;
     }
@@ -53,6 +54,7 @@ const Signup = () => {
         name: formData.name.trim(),
         email: formData.email.trim(),
         password: formData.password,
+        phoneNumber: formData.phoneNumber.trim(),
       };
       
       if (role === 'admin') {
@@ -164,6 +166,26 @@ const Signup = () => {
                   required
                   placeholder="alex.morgan@university.edu"
                   value={formData.email}
+                  onChange={handleChange}
+                  className="w-full pl-10 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-600 transition-all"
+                />
+              </div>
+            </div>
+
+            <div>
+              <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2">
+                Phone Number
+              </label>
+              <div className="relative">
+                <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                  <Phone className="w-5 h-5" />
+                </div>
+                <input
+                  type="tel"
+                  name="phoneNumber"
+                  required
+                  placeholder="e.g. +1234567890"
+                  value={formData.phoneNumber}
                   onChange={handleChange}
                   className="w-full pl-10 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-600 transition-all"
                 />
