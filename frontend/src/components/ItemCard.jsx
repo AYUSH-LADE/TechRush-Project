@@ -4,13 +4,14 @@ import { MapPin, Tag, ArrowRight, ShieldCheck, HelpCircle } from 'lucide-react';
 import { getImageUrl } from '../utils/getImageUrl';
 
 const ItemCard = ({ item }) => {
-  const { _id, id, title, category, location, type, status, imageUrl, image } = item;
+  const { _id, id, title, category, location, type, status } = item;
   const itemId = _id || id;
-  const imageSrc = imageUrl || image || null;
   const isClaimed = status === 'claimed';
   const isLost = type === 'lost';
-  const hasImage = item.hasImage !== undefined ? item.hasImage : !!imageSrc;
-  const resolvedImage = imageSrc || (item.hasImage ? _id : null);
+  // Backend stores images as binary; list API returns hasImage (bool)
+  // and image bytes are served from /api/items/:id/image
+  const hasImage = !!item.hasImage;
+  const imageSrc = hasImage ? itemId : null;
 
   return (
     <Link
@@ -19,9 +20,9 @@ const ItemCard = ({ item }) => {
     >
       {/* Image Container */}
       <div className="relative aspect-4/3 bg-slate-100 overflow-hidden flex items-center justify-center">
-        {hasImage && resolvedImage ? (
+        {imageSrc ? (
           <img
-            src={getImageUrl(resolvedImage)}
+            src={getImageUrl(imageSrc)}
             alt={title}
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
             onError={(e) => {
@@ -33,12 +34,12 @@ const ItemCard = ({ item }) => {
             }}
           />
         ) : null}
-        
+
         {/* Image Fallback */}
         <div
           className={`w-full h-full flex flex-col items-center justify-center bg-gradient-to-br ${
             isLost ? 'from-amber-50 to-orange-100 text-amber-600' : 'from-emerald-50 to-teal-100 text-emerald-600'
-          } ${hasImage && resolvedImage ? 'hidden' : 'flex'}`}
+          } ${imageSrc ? 'hidden' : 'flex'}`}
         >
           {isLost ? <HelpCircle className="w-12 h-12 stroke-[1.5]" /> : <ShieldCheck className="w-12 h-12 stroke-[1.5]" />}
           <span className="text-xs font-semibold uppercase tracking-wider mt-2 opacity-75">
@@ -50,9 +51,7 @@ const ItemCard = ({ item }) => {
         <div className="absolute top-3 left-3 right-3 flex items-center justify-between pointer-events-none">
           <span
             className={`px-3 py-1 text-xs font-bold uppercase tracking-wider rounded-full shadow-sm ${
-              isLost
-                ? 'bg-amber-500 text-white'
-                : 'bg-emerald-500 text-white'
+              isLost ? 'bg-amber-500 text-white' : 'bg-emerald-500 text-white'
             }`}
           >
             {type || 'Item'}

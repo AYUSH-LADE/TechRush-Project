@@ -102,7 +102,10 @@ const ItemDetail = () => {
 
   const isClaimed = item.status === 'claimed';
   const isLost = item.type === 'lost';
-  const imageSrc = item.imageUrl || item.image || null;
+  // Images are stored as binary in MongoDB; the API returns hasImage (bool)
+  // and we fetch the actual bytes from /api/items/:id/image
+  const hasImage = item.hasImage;
+  const imageSrc = hasImage ? (item._id || item.id) : null;
 
   const handleMarkAsClaimed = async () => {
     try {
@@ -168,7 +171,7 @@ const ItemDetail = () => {
                 onError={(e) => {
                   e.target.onerror = null;
                   e.target.style.display = 'none';
-                  e.target.nextSibling.style.display = 'flex';
+                  if (e.target.nextSibling) e.target.nextSibling.style.display = 'flex';
                 }}
               />
             ) : null}
