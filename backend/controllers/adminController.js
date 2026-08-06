@@ -2,8 +2,17 @@ const Item = require("../models/Item");
 
 exports.getAllItemsAdmin = async (req, res) => {
   try {
-    const items = await Item.find({}).sort({ createdAt: -1 });
-    res.status(200).json(items);
+    const items = await Item.find({})
+      .select('-imageData')
+      .sort({ createdAt: -1 });
+
+    const withFlag = items.map((item) => {
+      const obj = item.toObject();
+      obj.hasImage = !!item.imageMimeType;
+      return obj;
+    });
+
+    res.status(200).json(withFlag);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }

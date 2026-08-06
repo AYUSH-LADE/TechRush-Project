@@ -9,6 +9,8 @@ const ItemCard = ({ item }) => {
   const imageSrc = imageUrl || image || null;
   const isClaimed = status === 'claimed';
   const isLost = type === 'lost';
+  const hasImage = item.hasImage !== undefined ? item.hasImage : !!imageSrc;
+  const resolvedImage = imageSrc || (item.hasImage ? _id : null);
 
   return (
     <Link
@@ -16,16 +18,18 @@ const ItemCard = ({ item }) => {
       className="group bg-white rounded-2xl border border-slate-100 shadow-xs hover:shadow-xl hover:-translate-y-1 transition-all duration-300 overflow-hidden flex flex-col h-full"
     >
       {/* Image Container */}
-      <div className="relative aspect-4/3 bg-slate-100 overflow-hidden">
-        {imageSrc ? (
+      <div className="relative aspect-4/3 bg-slate-100 overflow-hidden flex items-center justify-center">
+        {hasImage && resolvedImage ? (
           <img
-            src={getImageUrl(imageSrc)}
+            src={getImageUrl(resolvedImage)}
             alt={title}
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
             onError={(e) => {
               e.target.onerror = null;
               e.target.style.display = 'none';
-              e.target.nextSibling.style.display = 'flex';
+              if (e.target.nextSibling) {
+                e.target.nextSibling.style.display = 'flex';
+              }
             }}
           />
         ) : null}
@@ -34,7 +38,7 @@ const ItemCard = ({ item }) => {
         <div
           className={`w-full h-full flex flex-col items-center justify-center bg-gradient-to-br ${
             isLost ? 'from-amber-50 to-orange-100 text-amber-600' : 'from-emerald-50 to-teal-100 text-emerald-600'
-          } ${imageSrc ? 'hidden' : 'flex'}`}
+          } ${hasImage && resolvedImage ? 'hidden' : 'flex'}`}
         >
           {isLost ? <HelpCircle className="w-12 h-12 stroke-[1.5]" /> : <ShieldCheck className="w-12 h-12 stroke-[1.5]" />}
           <span className="text-xs font-semibold uppercase tracking-wider mt-2 opacity-75">
