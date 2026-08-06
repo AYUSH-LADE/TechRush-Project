@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import { AuthProvider } from './context/AuthContext';
+import { AuthProvider, useAuth } from './context/AuthContext';
 import Navbar from './components/Navbar';
 import ProtectedRoute from './components/ProtectedRoute';
 import api from './api/axios';
@@ -12,6 +12,13 @@ import ItemDetail from './pages/ItemDetail';
 import ReportItem from './pages/ReportItem';
 import Dashboard from './pages/Dashboard';
 import Admin from './pages/Admin';
+
+// Redirects admin users away from any non-admin page to /admin
+function AdminRedirect({ children }) {
+  const { isAdmin } = useAuth();
+  if (isAdmin) return <Navigate to="/admin" replace />;
+  return children;
+}
 
 function HandshakeWrapper({ children }) {
   const [status, setStatus] = useState('loading'); // 'loading', 'success', 'error'
@@ -95,18 +102,18 @@ function App() {
             <Navbar />
             <div className="flex-1">
               <Routes>
-                {/* Public Routes */}
-                <Route path="/" element={<Explore />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/signup" element={<Signup />} />
+                {/* Public Routes — admins are redirected to /admin (except ItemDetail so they can preview items) */}
+                <Route path="/" element={<AdminRedirect><Explore /></AdminRedirect>} />
+                <Route path="/login" element={<AdminRedirect><Login /></AdminRedirect>} />
+                <Route path="/signup" element={<AdminRedirect><Signup /></AdminRedirect>} />
                 <Route path="/items/:id" element={<ItemDetail />} />
 
-                {/* Protected Routes */}
+                {/* Protected Routes — admins redirected to /admin */}
                 <Route
                   path="/report"
                   element={
                     <ProtectedRoute>
-                      <ReportItem />
+                      <AdminRedirect><ReportItem /></AdminRedirect>
                     </ProtectedRoute>
                   }
                 />
@@ -114,7 +121,7 @@ function App() {
                   path="/dashboard"
                   element={
                     <ProtectedRoute>
-                      <Dashboard />
+                      <AdminRedirect><Dashboard /></AdminRedirect>
                     </ProtectedRoute>
                   }
                 />
@@ -130,7 +137,7 @@ function App() {
                 />
 
                 {/* Fallback Catch-all Route */}
-                <Route path="*" element={<Navigate to="/" replace />} />
+                <Route path="*" element={<AdminRedirect><Navigate to="/" replace /></AdminRedirect>} />
               </Routes>
             </div>
           </div>

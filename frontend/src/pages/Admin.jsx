@@ -252,23 +252,27 @@ const Admin = () => {
                       const itemId = item._id || item.id;
                       const isFlagged = item.flagged || item.isFlagged;
                       const isClaimed = item.status === 'claimed';
+                      // Images stored as binary; admin list returns hasImage flag
+                      const hasImage = !!item.hasImage;
 
                       return (
                         <tr key={itemId} className="hover:bg-slate-50/80 transition-colors">
                           <td className="py-4 px-6 font-bold text-slate-900 max-w-xs">
                             <div className="flex items-center gap-3">
                               <div className="w-10 h-10 rounded-xl bg-slate-100 border border-slate-200 overflow-hidden shrink-0 flex items-center justify-center text-slate-400 font-bold text-xs">
-                                {item.imageUrl || item.image ? (
+                                {hasImage ? (
                                   <img
-                                    src={
-                                      getImageUrl(item.imageUrl || item.image)
-                                    }
+                                    src={getImageUrl(itemId)}
                                     alt={item.title}
                                     className="w-full h-full object-cover"
+                                    onError={(e) => {
+                                      e.target.onerror = null;
+                                      e.target.style.display = 'none';
+                                      if (e.target.nextSibling) e.target.nextSibling.style.display = 'flex';
+                                    }}
                                   />
-                                ) : (
-                                  'NO IMG'
-                                )}
+                                ) : null}
+                                {!hasImage && <span>NO IMG</span>}
                               </div>
                               <span className="truncate">{item.title}</span>
                             </div>
