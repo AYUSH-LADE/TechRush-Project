@@ -32,33 +32,32 @@
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  border-width: 1px;
+  border-width: 1.5px;
   border-style: solid;
   border-radius: 2px;
-  mix-blend-mode: multiply;
-  opacity: 0.85;
+  opacity: 1;
 }
 
 .ink-stamp-lost {
-  color: #a8432a;
-  border-color: #a8432a;
-  background-color: rgba(168, 67, 42, 0.05);
+  color: #b91c1c;
+  border-color: #b91c1c;
+  background-color: #fee2e2;
 }
 
 .ink-stamp-found {
-  color: var(--color-forest);
-  border-color: var(--color-forest);
-  background-color: rgba(75, 110, 72, 0.05);
+  color: #15803d;
+  border-color: #15803d;
+  background-color: #dcfce7;
 }
 
 .ink-stamp-claimed {
-  color: var(--color-stone);
-  border-color: var(--color-stone);
-  background-color: rgba(137, 137, 137, 0.05);
+  color: #374151;
+  border-color: #4b5563;
+  background-color: #e5e7eb;
 }
 
 .ink-stamp-pending {
-  color: #c48c34;
-  border-color: #c48c34;
-  background-color: rgba(196, 140, 52, 0.05);
+  color: #a16207;
+  border-color: #a16207;
+  background-color: #fef9c3;
 }

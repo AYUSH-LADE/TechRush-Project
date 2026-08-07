@@ -262,7 +262,7 @@ const Admin = () => {
                                   <img
                                     src={getImageUrl(itemId)}
                                     alt={item.title}
-                                    className="w-full h-full object-cover grayscale"
+                                    className="w-full h-full object-cover"
                                     onError={(e) => {
                                       e.target.onerror = null;
                                       e.target.style.display = 'none';
