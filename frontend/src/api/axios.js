@@ -8,8 +8,8 @@ const getDynamicBaseURL = () => {
   if (envUrl) return envUrl;
 
   if (typeof window !== 'undefined') {
-    const { hostname, port } = window.location;
-    const backendPort = port === '5174' ? '3001' : '3000';
+    const { hostname } = window.location;
+    const backendPort = '3000';
     return `http://${hostname}:${backendPort}/api`;
   }
 
