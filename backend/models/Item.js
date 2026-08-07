@@ -35,14 +35,23 @@ const itemSchema = new mongoose.Schema(
     },
     status: {
       type: String,
-      enum: ['active', 'claimed', 'returned'],
+      enum: ['active', 'pending', 'claimed', 'returned'],
       default: 'active'
     },
     reportedBy: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
       required: true
-    }
+    },
+    claimRequests: [
+      {
+        requestedBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+        verificationDetail: { type: String, required: true },
+        contactInfo: { type: String, required: true },
+        status: { type: String, enum: ['pending', 'approved', 'rejected'], default: 'pending' },
+        createdAt: { type: Date, default: Date.now }
+      }
+    ]
   },
   { timestamps: true }
 );

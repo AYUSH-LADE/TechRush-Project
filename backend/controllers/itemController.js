@@ -165,6 +165,126 @@ const deleteItem = async (req, res) => {
   }
 };
 
+// @route POST /api/items/:id/claim-request — token required
+const submitClaimRequest = async (req, res) => {
+  try {
+    const { verificationDetail, contactInfo } = req.body;
+    if (!verificationDetail || !contactInfo) {
+      return res.status(400).json({ message: 'Verification detail and contact info are required' });
+    }
+
+    const item = await Item.findById(req.params.id);
+    if (!item) return res.status(404).json({ message: 'Item not found' });
+
+    if (item.reportedBy.toString() === req.user._id.toString()) {
+      return res.status(403).json({ message: 'You cannot claim your own item' });
+    }
+
+    if (item.status !== 'active' && item.status !== 'pending') {
+      return res.status(400).json({ message: 'This item is no longer available for claims' });
+    }
+
+    if (verificationDetail.trim().toLowerCase() === item.description.trim().toLowerCase()) {
+      return res.status(400).json({ message: 'Verification detail cannot be exactly the same as the item description. Please provide unique identifying details.' });
+    }
+
+    item.claimRequests.push({
+      requestedBy: req.user._id,
+      verificationDetail,
+      contactInfo,
+      status: 'pending'
+    });
+
+    item.status = 'pending';
+    await item.save();
+
+    const updatedItem = await Item.findById(item._id)
+      .select('-imageData')
+      .populate('reportedBy', 'name email phoneNumber')
+      .populate('claimRequests.requestedBy', 'name email');
+      
+    const obj = updatedItem.toObject();
+    obj.hasImage = !!item.imageMimeType;
+
+    res.status(201).json(obj);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+// @route GET /api/items/:id/claim-requests — token required, owner only
+const getClaimRequests = async (req, res) => {
+  try {
+    const item = await Item.findById(req.params.id).populate('claimRequests.requestedBy', 'name email');
+    if (!item) return res.status(404).json({ message: 'Item not found' });
+
+    if (item.reportedBy.toString() !== req.user._id.toString()) {
+      return res.status(403).json({ message: 'Not authorized to view claim requests for this item' });
+    }
+
+    res.status(200).json(item.claimRequests);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+// @route PUT /api/items/:id/claim-request/:requestId/review — token required, owner only
+const reviewClaimRequest = async (req, res) => {
+  try {
+    const { action } = req.body;
+    if (!['approve', 'reject'].includes(action)) {
+      return res.status(400).json({ message: 'Action must be approve or reject' });
+    }
+
+    const item = await Item.findById(req.params.id);
+    if (!item) return res.status(404).json({ message: 'Item not found' });
+
+    if (item.reportedBy.toString() !== req.user._id.toString()) {
+      return res.status(403).json({ message: 'Not authorized to review claims for this item' });
+    }
+
+    const claimRequest = item.claimRequests.id(req.params.requestId);
+    if (!claimRequest) {
+      return res.status(404).json({ message: 'Claim request not found' });
+    }
+
+    if (action === 'approve') {
+      claimRequest.status = 'approved';
+      item.status = 'claimed';
+      
+      // Reject all other pending requests
+      item.claimRequests.forEach(req => {
+        if (req._id.toString() !== claimRequest._id.toString() && req.status === 'pending') {
+          req.status = 'rejected';
+        }
+      });
+    } else if (action === 'reject') {
+      claimRequest.status = 'rejected';
+      
+      const hasOtherPending = item.claimRequests.some(
+        req => req._id.toString() !== claimRequest._id.toString() && req.status === 'pending'
+      );
+      if (!hasOtherPending) {
+        item.status = 'active';
+      }
+    }
+
+    await item.save();
+
+    const updatedItem = await Item.findById(item._id)
+      .select('-imageData')
+      .populate('reportedBy', 'name email phoneNumber')
+      .populate('claimRequests.requestedBy', 'name email');
+
+    const obj = updatedItem.toObject();
+    obj.hasImage = !!item.imageMimeType;
+
+    res.status(200).json(obj);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
 module.exports = {
   createItem,
   getItems,
@@ -172,5 +292,8 @@ module.exports = {
   getItemImage,
   getMyItems,
   markAsClaimed,
-  deleteItem
+  deleteItem,
+  submitClaimRequest,
+  getClaimRequests,
+  reviewClaimRequest
 };
