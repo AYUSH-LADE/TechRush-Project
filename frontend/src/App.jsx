@@ -5,6 +5,8 @@ import Navbar from './components/Navbar';
 import ProtectedRoute from './components/ProtectedRoute';
 import api from './api/axios';
 
+import ChatWidget from './components/ChatWidget';
+
 import Explore from './pages/Explore';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
@@ -140,11 +142,13 @@ function App() {
                 <Route path="*" element={<AdminRedirect><Navigate to="/" replace /></AdminRedirect>} />
               </Routes>
             </div>
+            <ChatWidget />
           </div>
         </Router>
       </HandshakeWrapper>
     </AuthProvider>
   );
 }
+
 
 export default App;

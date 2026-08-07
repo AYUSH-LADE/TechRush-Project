@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import api from '../api/axios';
 import {
   UploadCloud,
@@ -41,13 +41,18 @@ const LOCATIONS = [
 
 const ReportItem = () => {
   const navigate = useNavigate();
+  const locationState = useLocation().state;
 
   const [formData, setFormData] = useState({
-    title: '',
-    description: '',
-    category: 'Electronics',
-    location: 'Main Library',
-    type: 'lost',
+    title: locationState?.prefillData?.title || locationState?.title || '',
+    description: locationState?.prefillData?.description || locationState?.description || '',
+    category: CATEGORIES.includes(locationState?.prefillData?.category || locationState?.category)
+      ? (locationState?.prefillData?.category || locationState?.category)
+      : 'Electronics',
+    location: LOCATIONS.includes(locationState?.prefillData?.location || locationState?.location)
+      ? (locationState?.prefillData?.location || locationState?.location)
+      : 'Main Library',
+    type: locationState?.prefillData?.type || locationState?.type || 'lost',
   });
 
   const [imageFile, setImageFile] = useState(null);

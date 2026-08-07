@@ -51,6 +51,7 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 app.use("/api/auth", require("./routes/authRoutes"));
 app.use("/api/items", require("./routes/itemRoutes"));
 app.use("/api/admin", require("./routes/adminRoutes"));
+app.use("/api/chat", require("./routes/chatRoutes"));
 
 app.get("/", (req, res) => res.send("Lost & Found API running"));
 
