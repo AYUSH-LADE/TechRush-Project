@@ -308,10 +308,14 @@ const Admin = () => {
                             <div className="flex items-center gap-1.5">
                               <span
                                 className={`px-2.5 py-1 rounded-full text-xs font-bold ${
-                                  isClaimed ? 'bg-slate-200 text-slate-700' : 'bg-blue-100 text-blue-800'
+                                  isClaimed 
+                                    ? 'bg-slate-200 text-slate-700' 
+                                    : item.status === 'pending'
+                                    ? 'bg-amber-100 text-amber-700'
+                                    : 'bg-blue-100 text-blue-800'
                                 }`}
                               >
-                                {isClaimed ? 'Claimed' : 'Active'}
+                                {isClaimed ? 'Claimed' : item.status === 'pending' ? 'Pending' : 'Active'}
                               </span>
                               {isFlagged && (
                                 <span className="px-2.5 py-1 bg-red-100 text-red-800 rounded-full text-xs font-bold flex items-center gap-1">

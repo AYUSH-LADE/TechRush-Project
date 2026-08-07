@@ -61,10 +61,12 @@ const ItemCard = ({ item }) => {
             className={`px-2.5 py-1 text-xs font-medium rounded-full border backdrop-blur-md ${
               isClaimed
                 ? 'bg-slate-900/80 text-slate-200 border-slate-700'
+                : status === 'pending'
+                ? 'bg-amber-100 text-amber-700 border-amber-300 font-semibold'
                 : 'bg-white/90 text-blue-700 border-blue-100 font-semibold'
             }`}
           >
-            {isClaimed ? 'Claimed' : 'Active'}
+            {isClaimed ? 'Claimed' : status === 'pending' ? 'Pending' : 'Active'}
           </span>
         </div>
       </div>
