@@ -20,6 +20,7 @@ import {
   User,
   RefreshCw
 } from 'lucide-react';
+import { useLocation } from 'react-router-dom';
 
 const SUGGESTIONS = [
   'I lost a black Samsung phone near the library',
@@ -30,7 +31,8 @@ const SUGGESTIONS = [
 
 const ChatWidget = () => {
   const navigate = useNavigate();
-  const { isAuthenticated } = useAuth();
+  const location = useLocation();
+  const { isAuthenticated, user } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState([
     {
@@ -44,6 +46,8 @@ const ChatWidget = () => {
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
   const messagesEndRef = useRef(null);
+
+
 
   const handleToggleChat = () => {
     if (!isAuthenticated) {
@@ -138,6 +142,10 @@ const ChatWidget = () => {
       state: { prefillData }
     });
   };
+
+  if (user?.role === 'admin' || location.pathname.startsWith('/admin')) {
+    return null;
+  }
 
   return (
     <div className="fixed bottom-5 right-5 z-50 font-sans">

@@ -468,7 +468,7 @@ const ItemDetail = () => {
                 </div>
               ) : (
                 <div className="font-mono">
-                  {(item.status === 'active' || item.status === 'pending') && item.type === 'found' ? (
+                  {(item.status === 'active' || item.status === 'pending') && item.type === 'found' && user?.role !== 'admin' ? (
                     <div className="space-y-4">
                       {claimSuccess ? (
                         <div className="p-4 bg-transparent border border-[#4B6E48] rounded-none text-center text-xs font-bold text-[#4B6E48] flex items-center justify-center gap-2 uppercase">
