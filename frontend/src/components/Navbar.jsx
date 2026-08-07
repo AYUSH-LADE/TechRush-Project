@@ -11,8 +11,7 @@ import {
   UserPlus,
   Menu,
   X,
-  Search,
-  UserCheck
+  Search
 } from 'lucide-react';
 
 const Navbar = () => {
@@ -30,66 +29,63 @@ const Navbar = () => {
   const isActive = (path) => location.pathname === path;
 
   return (
-    <nav className="sticky top-0 z-50 glass-nav border-b border-slate-200/80 transition-all duration-300">
+    <nav className="sticky top-0 z-50 bg-[#F2F0EF] border-b border-[#898989] text-[#333333]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 md:h-20">
-          
+
           {/* Brand Logo */}
           <Link
             to="/"
-            className="flex items-center gap-2.5 group focus:outline-none"
+            className="flex items-center gap-2 focus:outline-none"
             onClick={() => setMobileMenuOpen(false)}
           >
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-500 flex items-center justify-center text-white shadow-md shadow-blue-500/20 group-hover:scale-105 transition-transform">
-              <Search className="w-5 h-5 stroke-[2.5]" />
+            <div className="w-10 h-10 border border-[#898989] bg-[#F2F0EF] flex items-center justify-center text-[#4B6E48]">
+              <Search className="w-5 h-5 stroke-[2]" />
             </div>
             <div>
-              <span className="font-extrabold text-lg text-slate-900 tracking-tight flex items-center gap-1.5">
-                Campus<span className="text-blue-600">Reclaim</span>
+              <span className="font-serif font-extrabold text-lg text-[#333333] tracking-tight flex items-center gap-1">
+                <span className="text-[#4B6E48]">RECLAIM</span>
               </span>
-              <span className="block text-[10px] font-semibold uppercase tracking-wider text-slate-400 -mt-1">
-                Lost & Found Hub
+              <span className="block text-[9px] font-mono uppercase tracking-wider text-[#898989] -mt-1">
+                CAMPUS LOST PROPERTY LOG
               </span>
             </div>
           </Link>
 
           {/* Desktop Nav Items */}
-          <div className="hidden md:flex items-center gap-1 bg-slate-100/70 p-1.5 rounded-full border border-slate-200/60">
+          <div className="hidden md:flex items-center gap-0 border border-[#898989] bg-[#F2F0EF]">
             {!isAdmin && (
               <>
                 <Link
                   to="/"
-                  className={`flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold transition-all ${
-                    isActive('/')
-                      ? 'bg-white text-blue-700 shadow-xs'
-                      : 'text-slate-600 hover:text-slate-900 hover:bg-white/50'
-                  }`}
+                  className={`flex items-center gap-2 px-4 py-2 text-xs font-mono font-bold transition-all border-r border-[#898989] uppercase ${isActive('/')
+                      ? 'bg-[#4B6E48] text-[#F2F0EF]'
+                      : 'text-[#898989] hover:text-[#333333] hover:bg-[#B2AC88]/20'
+                    }`}
                 >
-                  <Compass className="w-4 h-4" />
+                  <Compass className="w-3.5 h-3.5" />
                   Explore
                 </Link>
 
                 <Link
                   to="/report"
-                  className={`flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold transition-all ${
-                    isActive('/report')
-                      ? 'bg-white text-blue-700 shadow-xs'
-                      : 'text-slate-600 hover:text-slate-900 hover:bg-white/50'
-                  }`}
+                  className={`flex items-center gap-2 px-4 py-2 text-xs font-mono font-bold transition-all border-r border-[#898989] uppercase ${isActive('/report')
+                      ? 'bg-[#4B6E48] text-[#F2F0EF]'
+                      : 'text-[#898989] hover:text-[#333333] hover:bg-[#B2AC88]/20'
+                    }`}
                 >
-                  <PlusCircle className="w-4 h-4" />
-                  Report Item
+                  <PlusCircle className="w-3.5 h-3.5" />
+                  Log Item
                 </Link>
 
                 <Link
                   to="/dashboard"
-                  className={`flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold transition-all ${
-                    isActive('/dashboard')
-                      ? 'bg-white text-blue-700 shadow-xs'
-                      : 'text-slate-600 hover:text-slate-900 hover:bg-white/50'
-                  }`}
+                  className={`flex items-center gap-2 px-4 py-2 text-xs font-mono font-bold transition-all uppercase ${isActive('/dashboard')
+                      ? 'bg-[#4B6E48] text-[#F2F0EF]'
+                      : 'text-[#898989] hover:text-[#333333] hover:bg-[#B2AC88]/20'
+                    }`}
                 >
-                  <LayoutDashboard className="w-4 h-4" />
+                  <LayoutDashboard className="w-3.5 h-3.5" />
                   Dashboard
                 </Link>
               </>
@@ -98,14 +94,13 @@ const Navbar = () => {
             {isAdmin && (
               <Link
                 to="/admin"
-                className={`flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold transition-all ${
-                  isActive('/admin')
-                    ? 'bg-amber-500 text-white shadow-xs'
-                    : 'text-amber-700 hover:bg-amber-100/70'
-                }`}
+                className={`flex items-center gap-2 px-4 py-2 text-xs font-mono font-bold transition-all uppercase ${isActive('/admin')
+                    ? 'bg-[#4B6E48] text-[#F2F0EF]'
+                    : 'text-[#898989] hover:bg-[#B2AC88]/20'
+                  }`}
               >
-                <ShieldAlert className="w-4 h-4" />
-                Admin Moderation
+                <ShieldAlert className="w-3.5 h-3.5" />
+                Moderation
               </Link>
             )}
           </div>
@@ -114,17 +109,17 @@ const Navbar = () => {
           <div className="hidden md:flex items-center gap-3">
             {isAuthenticated ? (
               <div className="flex items-center gap-3">
-                <div className="flex items-center gap-2 px-3.5 py-1.5 bg-slate-100 rounded-full border border-slate-200">
-                  <div className="w-6 h-6 rounded-full bg-blue-600 text-white flex items-center justify-center text-xs font-bold uppercase">
+                <div className="flex items-center gap-2 px-3 py-1.5 bg-[#F2F0EF] border border-[#898989] rounded-none">
+                  <div className="w-6 h-6 rounded-none bg-[#B2AC88] text-[#333333] flex items-center justify-center text-xs font-mono font-bold uppercase">
                     {user?.name ? user.name.charAt(0) : 'U'}
                   </div>
                   <div className="text-left">
-                    <p className="text-xs font-bold text-slate-800 leading-none">
-                      {user?.name || 'Student'}
+                    <p className="text-xs font-mono font-bold text-[#333333] leading-none uppercase">
+                      {user?.name || 'STUDENT'}
                     </p>
                     {isAdmin && (
-                      <span className="text-[9px] font-extrabold uppercase text-amber-600 leading-none">
-                        Admin
+                      <span className="text-[8px] font-mono font-extrabold uppercase text-[#4B6E48] leading-none">
+                        ADMIN
                       </span>
                     )}
                   </div>
@@ -132,10 +127,10 @@ const Navbar = () => {
 
                 <button
                   onClick={handleLogout}
-                  className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold text-slate-600 hover:text-red-600 hover:bg-red-50 transition-all cursor-pointer"
+                  className="flex items-center gap-1.5 px-3 py-2 border border-[#898989] text-xs font-mono font-bold text-[#898989] hover:text-[#333333] hover:bg-[#B2AC88]/20 transition-all cursor-pointer rounded-none uppercase"
                   title="Log out"
                 >
-                  <LogOut className="w-4 h-4" />
+                  <LogOut className="w-3.5 h-3.5" />
                   <span>Logout</span>
                 </button>
               </div>
@@ -143,17 +138,17 @@ const Navbar = () => {
               <div className="flex items-center gap-2">
                 <Link
                   to="/login"
-                  className="flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold text-slate-700 hover:bg-slate-100 transition-all"
+                  className="flex items-center gap-1.5 px-4 py-2 border border-[#898989] text-xs font-mono font-bold text-[#333333] hover:bg-[#B2AC88]/20 transition-all uppercase rounded-none"
                 >
-                  <LogIn className="w-4 h-4" />
+                  <LogIn className="w-3.5 h-3.5" />
                   Log In
                 </Link>
                 <Link
                   to="/signup"
-                  className="flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold bg-blue-600 text-white hover:bg-blue-700 shadow-md shadow-blue-500/20 transition-all hover:scale-[1.02]"
+                  className="flex items-center gap-1.5 px-4 py-2 bg-[#4B6E48] text-[#F2F0EF] text-xs font-mono font-bold hover:bg-[#4B6E48]/90 transition-all uppercase rounded-none"
                 >
-                  <UserPlus className="w-4 h-4" />
-                  Get Started
+                  <UserPlus className="w-3.5 h-3.5" />
+                  Register
                 </Link>
               </div>
             )}
@@ -163,7 +158,7 @@ const Navbar = () => {
           <div className="flex md:hidden items-center">
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-all"
+              className="p-2 border border-[#898989] text-[#333333] hover:bg-[#B2AC88]/20 transition-all"
               aria-label="Toggle Menu"
             >
               {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -174,15 +169,15 @@ const Navbar = () => {
 
       {/* Mobile Drawer */}
       {mobileMenuOpen && (
-        <div className="md:hidden border-t border-slate-200 bg-white/95 backdrop-blur-lg px-4 pt-3 pb-6 space-y-3">
+        <div className="md:hidden border-t border-[#898989] bg-[#F2F0EF] px-4 pt-3 pb-6 space-y-3">
           {isAuthenticated && (
-            <div className="p-3 bg-slate-50 rounded-xl flex items-center gap-3 mb-2 border border-slate-200/60">
-              <div className="w-9 h-9 rounded-full bg-blue-600 text-white flex items-center justify-center text-sm font-bold uppercase">
+            <div className="p-3 bg-[#F2F0EF] border border-[#898989] flex items-center gap-3 mb-2 rounded-none">
+              <div className="w-9 h-9 bg-[#B2AC88] text-[#333333] flex items-center justify-center text-sm font-mono font-bold uppercase">
                 {user?.name ? user.name.charAt(0) : 'U'}
               </div>
               <div>
-                <p className="text-sm font-bold text-slate-900">{user?.name}</p>
-                <p className="text-xs text-slate-500">{user?.email}</p>
+                <p className="text-sm font-mono font-bold text-[#333333] uppercase">{user?.name}</p>
+                <p className="text-xs font-mono text-[#898989]">{user?.email}</p>
               </div>
             </div>
           )}
@@ -193,33 +188,30 @@ const Navbar = () => {
                 <Link
                   to="/"
                   onClick={() => setMobileMenuOpen(false)}
-                  className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-all ${
-                    isActive('/') ? 'bg-blue-50 text-blue-700' : 'text-slate-700 hover:bg-slate-100'
-                  }`}
+                  className={`flex items-center gap-3 px-4 py-3 text-sm font-mono font-semibold transition-all border border-[#898989] mb-1.5 uppercase ${isActive('/') ? 'bg-[#4B6E48] text-[#F2F0EF]' : 'text-[#333333] hover:bg-[#B2AC88]/20'
+                    }`}
                 >
-                  <Compass className="w-5 h-5 text-blue-600" />
-                  Explore Items
+                  <Compass className="w-4 h-4" />
+                  Explore Log
                 </Link>
 
                 <Link
                   to="/report"
                   onClick={() => setMobileMenuOpen(false)}
-                  className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-all ${
-                    isActive('/report') ? 'bg-blue-50 text-blue-700' : 'text-slate-700 hover:bg-slate-100'
-                  }`}
+                  className={`flex items-center gap-3 px-4 py-3 text-sm font-mono font-semibold transition-all border border-[#898989] mb-1.5 uppercase ${isActive('/report') ? 'bg-[#4B6E48] text-[#F2F0EF]' : 'text-[#333333] hover:bg-[#B2AC88]/20'
+                    }`}
                 >
-                  <PlusCircle className="w-5 h-5 text-blue-600" />
-                  Report Lost/Found
+                  <PlusCircle className="w-4 h-4" />
+                  Log New Item
                 </Link>
 
                 <Link
                   to="/dashboard"
                   onClick={() => setMobileMenuOpen(false)}
-                  className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-all ${
-                    isActive('/dashboard') ? 'bg-blue-50 text-blue-700' : 'text-slate-700 hover:bg-slate-100'
-                  }`}
+                  className={`flex items-center gap-3 px-4 py-3 text-sm font-mono font-semibold transition-all border border-[#898989] uppercase ${isActive('/dashboard') ? 'bg-[#4B6E48] text-[#F2F0EF]' : 'text-[#333333] hover:bg-[#B2AC88]/20'
+                    }`}
                 >
-                  <LayoutDashboard className="w-5 h-5 text-blue-600" />
+                  <LayoutDashboard className="w-4 h-4" />
                   My Dashboard
                 </Link>
               </>
@@ -229,23 +221,22 @@ const Navbar = () => {
               <Link
                 to="/admin"
                 onClick={() => setMobileMenuOpen(false)}
-                className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-all ${
-                  isActive('/admin') ? 'bg-amber-100 text-amber-800' : 'text-amber-700 hover:bg-amber-50'
-                }`}
+                className={`flex items-center gap-3 px-4 py-3 text-sm font-mono font-semibold transition-all border border-[#898989] uppercase ${isActive('/admin') ? 'bg-[#4B6E48] text-[#F2F0EF]' : 'text-[#898989] hover:bg-[#B2AC88]/20'
+                  }`}
               >
-                <ShieldAlert className="w-5 h-5 text-amber-600" />
-                Admin Moderation
+                <ShieldAlert className="w-4 h-4" />
+                Moderation Log
               </Link>
             )}
           </div>
 
-          <div className="pt-3 border-t border-slate-200">
+          <div className="pt-3 border-t border-[#898989]">
             {isAuthenticated ? (
               <button
                 onClick={handleLogout}
-                className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl text-sm font-bold text-red-600 bg-red-50 hover:bg-red-100 transition-all cursor-pointer"
+                className="w-full flex items-center justify-center gap-2 px-4 py-3 border border-[#898989] text-sm font-mono font-bold text-red-700 bg-red-50 hover:bg-red-100 transition-all cursor-pointer"
               >
-                <LogOut className="w-5 h-5" />
+                <LogOut className="w-4 h-4" />
                 Log Out
               </button>
             ) : (
@@ -253,16 +244,16 @@ const Navbar = () => {
                 <Link
                   to="/login"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="flex items-center justify-center px-4 py-2.5 rounded-xl text-sm font-bold text-slate-700 bg-slate-100 hover:bg-slate-200 transition-all text-center"
+                  className="flex items-center justify-center px-4 py-2.5 border border-[#898989] text-sm font-mono font-bold text-[#333333] hover:bg-[#B2AC88]/20 transition-all text-center uppercase"
                 >
                   Log In
                 </Link>
                 <Link
                   to="/signup"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="flex items-center justify-center px-4 py-2.5 rounded-xl text-sm font-bold text-white bg-blue-600 hover:bg-blue-700 shadow-md shadow-blue-500/20 transition-all text-center"
+                  className="flex items-center justify-center px-4 py-2.5 bg-[#4B6E48] text-white text-sm font-mono font-bold hover:bg-[#4B6E48]/90 transition-all text-center uppercase"
                 >
-                  Sign Up
+                  Register
                 </Link>
               </div>
             )}

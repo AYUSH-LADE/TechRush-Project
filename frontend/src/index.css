@@ -1,25 +1,64 @@
 @import "tailwindcss";
 
+@theme {
+  --color-sage: #B2AC88;
+  --color-stone: #898989;
+  --color-paper: #F2F0EF;
+  --color-forest: #4B6E48;
+
+  --font-serif: "Fraunces", Georgia, serif;
+  --font-sans: "IBM Plex Sans", system-ui, -apple-system, sans-serif;
+  --font-mono: "IBM Plex Mono", monospace;
+}
+
 @layer base {
   body {
-    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    background-color: var(--color-paper);
+    color: #333333; /* Darker text for readability on paper */
+    font-family: var(--font-sans);
   }
 }
 
-/* Glassmorphism utility helpers */
-.glass-panel {
-  background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+/* Custom CSS tag and stamp utility classes */
+.tag-notch-tr {
+  clip-path: polygon(0 0, calc(100% - 24px) 0, 100% 24px, 100% 100%, 0 100%);
 }
 
-.glass-nav {
-  background: rgba(255, 255, 255, 0.9);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+.ink-stamp {
+  display: inline-block;
+  padding: 0.25rem 0.6rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 2px;
+  mix-blend-mode: multiply;
+  opacity: 0.85;
 }
 
-.bg-grid-pattern {
-  background-image: radial-gradient(rgba(59, 130, 246, 0.12) 1px, transparent 1px);
-  background-size: 24px 24px;
+.ink-stamp-lost {
+  color: #a8432a;
+  border-color: #a8432a;
+  background-color: rgba(168, 67, 42, 0.05);
+}
+
+.ink-stamp-found {
+  color: var(--color-forest);
+  border-color: var(--color-forest);
+  background-color: rgba(75, 110, 72, 0.05);
+}
+
+.ink-stamp-claimed {
+  color: var(--color-stone);
+  border-color: var(--color-stone);
+  background-color: rgba(137, 137, 137, 0.05);
+}
+
+.ink-stamp-pending {
+  color: #c48c34;
+  border-color: #c48c34;
+  background-color: rgba(196, 140, 52, 0.05);
 }

@@ -46,19 +46,19 @@ const ItemFilters = ({ filters, setFilters, onReset }) => {
   );
 
   return (
-    <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xs p-4 md:p-6 mb-8">
-      <div className="flex items-center justify-between mb-4">
-        <div className="flex items-center gap-2 text-slate-800 font-semibold text-sm">
-          <Filter className="w-4 h-4 text-blue-600" />
-          <span>Filter & Search</span>
+    <div className="bg-[#F2F0EF] border border-[#898989] rounded-none p-4 md:p-6 mb-8 text-[#333333] font-sans">
+      <div className="flex items-center justify-between mb-4 border-b border-[#898989] pb-3">
+        <div className="flex items-center gap-2 font-serif font-bold text-base text-[#333333]">
+          <Filter className="w-4 h-4 text-[#4B6E48]" />
+          <span>FILTER & SEARCH INDEX</span>
         </div>
         {hasActiveFilters && (
           <button
             onClick={onReset}
-            className="flex items-center gap-1 text-xs font-semibold text-slate-500 hover:text-red-600 transition-colors cursor-pointer"
+            className="flex items-center gap-1 text-xs font-mono text-[#898989] hover:text-[#4B6E48] transition-colors cursor-pointer border border-[#898989] px-2 py-0.5"
           >
-            <X className="w-3.5 h-3.5" />
-            Clear All
+            <X className="w-3 h-3" />
+            RESET_FILTERS
           </button>
         )}
       </div>
@@ -66,7 +66,7 @@ const ItemFilters = ({ filters, setFilters, onReset }) => {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {/* Search Keyword */}
         <div className="relative">
-          <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-[#898989]">
             <Search className="w-4 h-4" />
           </div>
           <input
@@ -74,23 +74,23 @@ const ItemFilters = ({ filters, setFilters, onReset }) => {
             placeholder="Search keywords..."
             value={filters.keyword || ''}
             onChange={(e) => handleChange('keyword', e.target.value)}
-            className="w-full pl-10 pr-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-600 transition-all"
+            className="w-full pl-9 pr-3 py-2 bg-[#F2F0EF] border border-[#898989] rounded-none text-sm font-mono text-[#333333] placeholder-[#898989] focus:outline-none focus:border-[#4B6E48] transition-all"
           />
         </div>
 
         {/* Category Filter */}
         <div className="relative">
-          <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-[#898989]">
             <Tag className="w-4 h-4" />
           </div>
           <select
             value={filters.category || 'All Categories'}
             onChange={(e) => handleChange('category', e.target.value)}
-            className="w-full pl-10 pr-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium text-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-600 transition-all appearance-none cursor-pointer"
+            className="w-full pl-9 pr-3 py-2 bg-[#F2F0EF] border border-[#898989] rounded-none text-sm font-mono text-[#333333] focus:outline-none focus:border-[#4B6E48] transition-all appearance-none cursor-pointer"
           >
             {CATEGORIES.map((cat) => (
               <option key={cat} value={cat}>
-                {cat}
+                {cat.toUpperCase()}
               </option>
             ))}
           </select>
@@ -98,17 +98,17 @@ const ItemFilters = ({ filters, setFilters, onReset }) => {
 
         {/* Location Filter */}
         <div className="relative">
-          <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-[#898989]">
             <MapPin className="w-4 h-4" />
           </div>
           <select
             value={filters.location || 'All Locations'}
             onChange={(e) => handleChange('location', e.target.value)}
-            className="w-full pl-10 pr-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium text-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-600 transition-all appearance-none cursor-pointer"
+            className="w-full pl-9 pr-3 py-2 bg-[#F2F0EF] border border-[#898989] rounded-none text-sm font-mono text-[#333333] focus:outline-none focus:border-[#4B6E48] transition-all appearance-none cursor-pointer"
           >
             {LOCATIONS.map((loc) => (
               <option key={loc} value={loc}>
-                {loc}
+                {loc.toUpperCase()}
               </option>
             ))}
           </select>
@@ -116,17 +116,17 @@ const ItemFilters = ({ filters, setFilters, onReset }) => {
 
         {/* Type Filter */}
         <div className="relative">
-          <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-[#898989]">
             <Layers className="w-4 h-4" />
           </div>
           <select
             value={filters.type || ''}
             onChange={(e) => handleChange('type', e.target.value)}
-            className="w-full pl-10 pr-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium text-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-600 transition-all appearance-none cursor-pointer"
+            className="w-full pl-9 pr-3 py-2 bg-[#F2F0EF] border border-[#898989] rounded-none text-sm font-mono text-[#333333] focus:outline-none focus:border-[#4B6E48] transition-all appearance-none cursor-pointer"
           >
-            <option value="">All Types (Lost & Found)</option>
-            <option value="lost">Lost Only</option>
-            <option value="found">Found Only</option>
+            <option value="">ALL TYPES (LOST & FOUND)</option>
+            <option value="lost">LOST ONLY</option>
+            <option value="found">FOUND ONLY</option>
           </select>
         </div>
       </div>

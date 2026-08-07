@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { MapPin, Tag, ArrowRight, ShieldCheck, HelpCircle } from 'lucide-react';
+import { MapPin, Tag as TagIcon, ArrowRight, HelpCircle, ShieldCheck } from 'lucide-react';
 import { getImageUrl } from '../utils/getImageUrl';
 
 const ItemCard = ({ item }) => {
@@ -8,23 +8,29 @@ const ItemCard = ({ item }) => {
   const itemId = _id || id;
   const isClaimed = status === 'claimed';
   const isLost = type === 'lost';
-  // Backend stores images as binary; list API returns hasImage (bool)
-  // and image bytes are served from /api/items/:id/image
   const hasImage = !!item.hasImage;
   const imageSrc = hasImage ? itemId : null;
 
   return (
     <Link
       to={`/items/${itemId}`}
-      className="group bg-white rounded-2xl border border-slate-100 shadow-xs hover:shadow-xl hover:-translate-y-1 transition-all duration-300 overflow-hidden flex flex-col h-full"
+      className="group bg-[#F2F0EF] border border-[#898989] hover:border-[#4B6E48] transition-all duration-300 relative tag-notch-tr flex flex-col h-full overflow-hidden text-[#333333]"
     >
+      {/* Decorative tag punch hole */}
+      <div className="absolute top-[8px] right-[8px] w-4 h-4 rounded-full bg-[#F2F0EF] border border-[#898989] flex items-center justify-center z-30">
+        <div className="w-1.5 h-1.5 rounded-full bg-[#898989] group-hover:bg-[#4B6E48] transition-colors" />
+      </div>
+
+      {/* Decorative tag string */}
+      <div className="absolute -top-3 right-[18px] w-[1px] h-6 bg-[#898989] group-hover:bg-[#4B6E48] rotate-[25deg] origin-bottom z-20 pointer-events-none transition-colors" />
+
       {/* Image Container */}
-      <div className="relative aspect-4/3 bg-slate-100 overflow-hidden flex items-center justify-center">
+      <div className="relative aspect-4/3 bg-[#E5E2E0] border-b border-[#898989] overflow-hidden flex items-center justify-center">
         {imageSrc ? (
           <img
             src={getImageUrl(imageSrc)}
             alt={title}
-            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+            className="w-full h-full object-cover grayscale-25 group-hover:grayscale-0 transition-all duration-500"
             onError={(e) => {
               e.target.onerror = null;
               e.target.style.display = 'none';
@@ -37,33 +43,28 @@ const ItemCard = ({ item }) => {
 
         {/* Image Fallback */}
         <div
-          className={`w-full h-full flex flex-col items-center justify-center bg-gradient-to-br ${
-            isLost ? 'from-amber-50 to-orange-100 text-amber-600' : 'from-emerald-50 to-teal-100 text-emerald-600'
-          } ${imageSrc ? 'hidden' : 'flex'}`}
+          className={`w-full h-full flex flex-col items-center justify-center bg-[#E5E2E0] text-[#898989] ${
+            imageSrc ? 'hidden' : 'flex'
+          }`}
         >
-          {isLost ? <HelpCircle className="w-12 h-12 stroke-[1.5]" /> : <ShieldCheck className="w-12 h-12 stroke-[1.5]" />}
-          <span className="text-xs font-semibold uppercase tracking-wider mt-2 opacity-75">
-            {isLost ? 'Lost Item' : 'Found Item'}
+          {isLost ? <HelpCircle className="w-10 h-10 stroke-[1.2]" /> : <ShieldCheck className="w-10 h-10 stroke-[1.2]" />}
+        </div>
+
+        {/* Ink Stamps Overlay */}
+        <div className="absolute top-3 left-3 flex flex-col gap-2 items-start pointer-events-none z-10">
+          <span className={`ink-stamp ${isLost ? 'ink-stamp-lost -rotate-6' : 'ink-stamp-found rotate-3'}`}>
+            {type || 'Item'}
           </span>
         </div>
 
-        {/* Badges Overlay */}
-        <div className="absolute top-3 left-3 right-3 flex items-center justify-between pointer-events-none">
+        <div className="absolute bottom-3 right-3 pointer-events-none z-10">
           <span
-            className={`px-3 py-1 text-xs font-bold uppercase tracking-wider rounded-full shadow-sm ${
-              isLost ? 'bg-amber-500 text-white' : 'bg-emerald-500 text-white'
-            }`}
-          >
-            {type || 'Item'}
-          </span>
-
-          <span
-            className={`px-2.5 py-1 text-xs font-medium rounded-full border backdrop-blur-md ${
+            className={`ink-stamp ${
               isClaimed
-                ? 'bg-slate-900/80 text-slate-200 border-slate-700'
+                ? 'ink-stamp-claimed rotate-2'
                 : status === 'pending'
-                ? 'bg-amber-100 text-amber-700 border-amber-300 font-semibold'
-                : 'bg-white/90 text-blue-700 border-blue-100 font-semibold'
+                ? 'ink-stamp-pending -rotate-3'
+                : 'ink-stamp-found rotate-6'
             }`}
           >
             {isClaimed ? 'Claimed' : status === 'pending' ? 'Pending' : 'Active'}
@@ -72,28 +73,32 @@ const ItemCard = ({ item }) => {
       </div>
 
       {/* Content */}
-      <div className="p-5 flex-1 flex flex-col justify-between">
+      <div className="p-4 flex-1 flex flex-col justify-between">
         <div>
-          <div className="flex items-center gap-2 text-xs font-semibold text-blue-600 mb-2">
-            <Tag className="w-3.5 h-3.5" />
-            <span className="truncate">{category || 'General'}</span>
+          {/* Monospace Category tag */}
+          <div className="flex items-center gap-1.5 text-[11px] font-mono text-[#898989] mb-1.5">
+            <TagIcon className="w-3 h-3 text-[#B2AC88]" />
+            <span className="truncate uppercase tracking-wider">{category || 'General'}</span>
           </div>
 
-          <h3 className="font-bold text-slate-900 text-lg leading-snug group-hover:text-blue-600 transition-colors line-clamp-1 mb-2">
+          {/* Slab serif Heading */}
+          <h3 className="font-serif font-bold text-[#333333] text-lg leading-tight group-hover:text-[#4B6E48] transition-colors line-clamp-2 mb-2">
             {title}
           </h3>
 
-          <div className="flex items-center gap-1.5 text-xs text-slate-500 mb-4">
-            <MapPin className="w-3.5 h-3.5 text-slate-400 shrink-0" />
+          {/* Monospace Location */}
+          <div className="flex items-center gap-1.5 text-xs font-mono text-[#898989] mb-4">
+            <MapPin className="w-3 h-3 text-[#B2AC88] shrink-0" />
             <span className="truncate">{location || 'Campus'}</span>
           </div>
         </div>
 
-        {/* Footer */}
-        <div className="pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-semibold text-slate-600 group-hover:text-blue-600">
-          <span>View Details</span>
-          <div className="w-7 h-7 rounded-full bg-slate-50 group-hover:bg-blue-600 group-hover:text-white flex items-center justify-center transition-colors">
-            <ArrowRight className="w-4 h-4" />
+        {/* Footer (Ledger-style) */}
+        <div className="pt-2.5 border-t border-dashed border-[#898989] flex items-center justify-between text-xs font-mono text-[#898989] group-hover:text-[#4B6E48] transition-colors">
+          <span className="uppercase tracking-wider">LOG_REF_{itemId.slice(-6).toUpperCase()}</span>
+          <div className="flex items-center gap-1">
+            <span className="text-[10px] uppercase font-bold">Details</span>
+            <ArrowRight className="w-3.5 h-3.5" />
           </div>
         </div>
       </div>

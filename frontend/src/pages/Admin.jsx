@@ -13,7 +13,6 @@ import {
   CheckCircle,
   MapPin,
   Tag,
-  Search,
   Lock
 } from 'lucide-react';
 
@@ -98,14 +97,14 @@ const Admin = () => {
 
   if (isUnauthorized) {
     return (
-      <div className="max-w-xl mx-auto px-4 py-16 text-center">
-        <div className="bg-white rounded-3xl p-8 border border-red-200 shadow-xl">
-          <div className="w-14 h-14 bg-red-50 text-red-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
-            <Lock className="w-7 h-7" />
+      <div className="max-w-xl mx-auto px-4 py-16 text-center bg-[#F2F0EF] text-[#333333]">
+        <div className="bg-[#F2F0EF] border border-[#898989] p-8 rounded-none">
+          <div className="w-12 h-12 border border-[#898989] text-red-800 flex items-center justify-center mx-auto mb-4 bg-red-50/20">
+            <Lock className="w-6 h-6" />
           </div>
-          <h2 className="text-xl font-bold text-slate-900 mb-2">403 — Access Forbidden</h2>
-          <p className="text-sm text-slate-600 mb-6">
-            Your current account credentials do not have administrative privileges to manage moderation.
+          <h2 className="text-lg font-serif font-bold mb-2 uppercase">ACCESS_DENIED</h2>
+          <p className="text-xs font-mono text-[#898989] mb-6 uppercase">
+            Administrative privileges required.
           </p>
         </div>
       </div>
@@ -113,21 +112,21 @@ const Admin = () => {
   }
 
   return (
-    <div className="min-h-screen bg-slate-50/50 py-10 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-[#F2F0EF] py-10 px-4 sm:px-6 lg:px-8 text-[#333333]">
       <div className="max-w-7xl mx-auto">
         
         {/* Header */}
-        <div className="bg-gradient-to-r from-amber-900 via-amber-950 to-slate-950 rounded-3xl p-6 sm:p-10 text-white shadow-xl mb-8 relative overflow-hidden">
+        <div className="bg-[#B2AC88]/10 border border-[#898989] rounded-none p-6 sm:p-10 mb-8 relative overflow-hidden">
           <div className="flex items-center justify-between">
             <div>
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 text-xs font-semibold mb-3 border border-amber-400/20">
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 border border-[#898989] bg-[#F2F0EF] text-[#333333] font-mono text-[10px] uppercase tracking-wider mb-3">
                 <ShieldAlert className="w-3.5 h-3.5" />
                 <span>Admin Moderation Console</span>
               </div>
-              <h1 className="text-3xl font-extrabold tracking-tight">
+              <h1 className="text-3xl font-serif font-extrabold uppercase">
                 Content & Flag Moderation
               </h1>
-              <p className="text-amber-200/80 text-sm mt-1">
+              <p className="text-[#898989] font-mono text-xs mt-1 uppercase">
                 Review all campus reports, flag inappropriate content, or remove rule-violating listings.
               </p>
             </div>
@@ -135,9 +134,9 @@ const Admin = () => {
             <button
               onClick={fetchAllItems}
               disabled={loading}
-              className="hidden sm:flex items-center gap-1.5 px-4 py-2 text-xs font-bold text-amber-100 bg-amber-900/60 border border-amber-700/60 rounded-xl hover:bg-amber-800/80 transition-all cursor-pointer disabled:opacity-50"
+              className="hidden sm:flex items-center gap-1.5 px-4 py-2 text-xs font-mono font-bold text-[#333333] bg-[#F2F0EF] border border-[#898989] hover:bg-[#B2AC88]/20 transition-all cursor-pointer disabled:opacity-50 uppercase"
             >
-              <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
+              <RefreshCw className={`w-3.5 h-3.5 ${loading ? 'animate-spin' : ''}`} />
               <span>Refresh Queue</span>
             </button>
           </div>
@@ -146,23 +145,23 @@ const Admin = () => {
         {/* Global Action Toast Notification */}
         {actionMessage && (
           <div
-            className={`mb-6 p-4 rounded-2xl border flex items-center justify-between text-sm ${
+            className={`mb-6 p-4 rounded-none border flex items-center justify-between text-xs font-mono uppercase ${
               actionMessage.type === 'success'
-                ? 'bg-emerald-50 border-emerald-200 text-emerald-800'
-                : 'bg-red-50 border-red-200 text-red-800'
+                ? 'bg-transparent border-[#4B6E48] text-[#4B6E48]'
+                : 'bg-red-50/20 border-red-700 text-red-800'
             }`}
           >
             <div className="flex items-center gap-2">
               {actionMessage.type === 'success' ? (
-                <CheckCircle className="w-5 h-5 text-emerald-600" />
+                <CheckCircle className="w-4 h-4" />
               ) : (
-                <AlertTriangle className="w-5 h-5 text-red-600" />
+                <AlertTriangle className="w-4 h-4" />
               )}
-              <span className="font-semibold">{actionMessage.text}</span>
+              <span className="font-bold">{actionMessage.text}</span>
             </div>
             <button
               onClick={() => setActionMessage(null)}
-              className="text-xs font-bold underline cursor-pointer"
+              className="text-[10px] font-bold underline cursor-pointer"
             >
               Dismiss
             </button>
@@ -171,28 +170,28 @@ const Admin = () => {
 
         {/* Delete Confirmation Modal */}
         {itemToRemove && (
-          <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4">
-            <div className="bg-white rounded-3xl p-6 max-w-md w-full border border-slate-200 shadow-2xl space-y-4">
-              <div className="w-12 h-12 rounded-2xl bg-red-50 text-red-600 flex items-center justify-center">
-                <Trash2 className="w-6 h-6" />
+          <div className="fixed inset-0 z-50 bg-[#F2F0EF]/80 flex items-center justify-center p-4">
+            <div className="bg-[#F2F0EF] rounded-none p-6 max-w-md w-full border border-[#898989] space-y-4 text-xs font-mono">
+              <div className="w-10 h-10 border border-[#898989] text-red-800 flex items-center justify-center bg-red-50/20">
+                <Trash2 className="w-5 h-5" />
               </div>
               <div>
-                <h3 className="text-lg font-bold text-slate-900">Confirm Moderation Deletion</h3>
-                <p className="text-xs text-slate-500 mt-1">
-                  Are you sure you want to remove post <span className="font-bold text-slate-800">"{itemToRemove.title}"</span>? This operation cannot be undone.
+                <h3 className="text-sm font-serif font-bold text-[#333333] uppercase">Confirm Moderation Deletion</h3>
+                <p className="text-[#898989] mt-1 uppercase">
+                  Are you sure you want to remove post <span className="font-bold text-[#333333]">"{itemToRemove.title}"</span>? This operation cannot be undone.
                 </p>
               </div>
               <div className="flex gap-3 pt-2">
                 <button
                   onClick={() => handleRemoveItem(itemToRemove._id || itemToRemove.id)}
                   disabled={actionLoadingId === (itemToRemove._id || itemToRemove.id)}
-                  className="flex-1 py-2.5 bg-red-600 hover:bg-red-700 text-white font-bold text-xs rounded-xl transition-all cursor-pointer"
+                  className="flex-1 py-2 bg-red-700 text-white font-bold transition-all cursor-pointer rounded-none uppercase"
                 >
                   Confirm Delete
                 </button>
                 <button
                   onClick={() => setItemToRemove(null)}
-                  className="flex-1 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs rounded-xl transition-all cursor-pointer"
+                  className="flex-1 py-2 bg-[#898989] text-[#F2F0EF] font-bold transition-all cursor-pointer rounded-none uppercase"
                 >
                   Cancel
                 </button>
@@ -210,12 +209,12 @@ const Admin = () => {
 
         {/* Error */}
         {error && !loading && (
-          <div className="bg-red-50 border border-red-200 rounded-2xl p-8 text-center max-w-lg mx-auto my-8">
-            <AlertTriangle className="w-8 h-8 text-red-600 mx-auto mb-2" />
-            <p className="text-sm font-bold text-red-900">{error}</p>
+          <div className="bg-[#F2F0EF] border border-[#898989] p-8 text-center max-w-lg mx-auto my-8">
+            <AlertTriangle className="w-6 h-6 text-red-800 mx-auto mb-2" />
+            <p className="text-xs font-mono text-[#898989] uppercase">{error}</p>
             <button
               onClick={fetchAllItems}
-              className="mt-4 px-4 py-2 bg-red-600 text-white font-bold text-xs rounded-xl"
+              className="mt-4 px-4 py-2 bg-[#4B6E48] text-[#F2F0EF] border border-[#4B6E48] font-mono text-xs uppercase"
             >
               Retry
             </button>
@@ -224,22 +223,22 @@ const Admin = () => {
 
         {/* Table / Cards List */}
         {!loading && !error && (
-          <div className="bg-white rounded-3xl border border-slate-200/80 shadow-lg overflow-hidden">
-            <div className="p-6 border-b border-slate-100 flex items-center justify-between">
-              <h2 className="text-base font-bold text-slate-900">Total Items ({items.length})</h2>
-              <span className="text-xs text-slate-500 font-medium">Logged in as Administrator</span>
+          <div className="bg-[#F2F0EF] rounded-none border border-[#898989] overflow-hidden">
+            <div className="p-6 border-b border-[#898989] flex items-center justify-between text-xs font-mono">
+              <h2 className="text-sm font-serif font-bold text-[#333333] uppercase">Total Logs ({items.length})</h2>
+              <span className="text-[#898989] uppercase">Logged in as Administrator</span>
             </div>
 
             {items.length === 0 ? (
-              <div className="p-12 text-center text-slate-500">
-                <p className="font-semibold text-sm">No items in system.</p>
+              <div className="p-12 text-center text-[#898989] font-mono text-xs uppercase">
+                <p>No ledger logs in database.</p>
               </div>
             ) : (
               <div className="overflow-x-auto">
-                <table className="w-full text-left text-sm text-slate-600">
-                  <thead className="bg-slate-50 border-b border-slate-100 text-xs font-bold uppercase tracking-wider text-slate-400">
+                <table className="w-full text-left text-xs font-mono text-[#333333]">
+                  <thead className="bg-[#B2AC88]/10 border-b border-[#898989] text-[10px] font-bold uppercase tracking-wider text-[#898989]">
                     <tr>
-                      <th className="py-4 px-6">Item</th>
+                      <th className="py-4 px-6">Item Log</th>
                       <th className="py-4 px-6">Category</th>
                       <th className="py-4 px-6">Location</th>
                       <th className="py-4 px-6">Type</th>
@@ -247,24 +246,23 @@ const Admin = () => {
                       <th className="py-4 px-6 text-right">Admin Actions</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-slate-100">
+                  <tbody className="divide-y divide-[#898989]">
                     {items.map((item) => {
                       const itemId = item._id || item.id;
                       const isFlagged = item.flagged || item.isFlagged;
                       const isClaimed = item.status === 'claimed';
-                      // Images stored as binary; admin list returns hasImage flag
                       const hasImage = !!item.hasImage;
 
                       return (
-                        <tr key={itemId} className="hover:bg-slate-50/80 transition-colors">
-                          <td className="py-4 px-6 font-bold text-slate-900 max-w-xs">
+                        <tr key={itemId} className="hover:bg-[#B2AC88]/5 transition-colors">
+                          <td className="py-4 px-6 font-bold text-[#333333] max-w-xs">
                             <div className="flex items-center gap-3">
-                              <div className="w-10 h-10 rounded-xl bg-slate-100 border border-slate-200 overflow-hidden shrink-0 flex items-center justify-center text-slate-400 font-bold text-xs">
+                              <div className="w-10 h-10 border border-[#898989] bg-[#E5E2E0] overflow-hidden shrink-0 flex items-center justify-center text-[#898989] font-bold text-[9px] rounded-none">
                                 {hasImage ? (
                                   <img
                                     src={getImageUrl(itemId)}
                                     alt={item.title}
-                                    className="w-full h-full object-cover"
+                                    className="w-full h-full object-cover grayscale"
                                     onError={(e) => {
                                       e.target.onerror = null;
                                       e.target.style.display = 'none';
@@ -274,30 +272,30 @@ const Admin = () => {
                                 ) : null}
                                 {!hasImage && <span>NO IMG</span>}
                               </div>
-                              <span className="truncate">{item.title}</span>
+                              <span className="truncate uppercase">{item.title}</span>
                             </div>
                           </td>
 
                           <td className="py-4 px-6">
-                            <span className="inline-flex items-center gap-1 bg-slate-100 text-slate-700 px-2.5 py-1 rounded-lg text-xs font-semibold">
-                              <Tag className="w-3 h-3 text-slate-400" />
+                            <span className="inline-flex items-center gap-1 text-[#898989] px-2 py-0.5 border border-[#898989] uppercase text-[10px]">
+                              <Tag className="w-3 h-3 text-[#B2AC88]" />
                               {item.category || 'General'}
                             </span>
                           </td>
 
-                          <td className="py-4 px-6 text-xs font-medium">
-                            <div className="flex items-center gap-1 text-slate-600">
-                              <MapPin className="w-3.5 h-3.5 text-slate-400" />
+                          <td className="py-4 px-6 text-[11px]">
+                            <div className="flex items-center gap-1 text-[#898989]">
+                              <MapPin className="w-3 h-3 text-[#B2AC88]" />
                               {item.location || 'Campus'}
                             </div>
                           </td>
 
                           <td className="py-4 px-6">
                             <span
-                              className={`px-2.5 py-1 rounded-full text-xs font-bold uppercase tracking-wider ${
+                              className={`ink-stamp text-[10px] uppercase ${
                                 item.type === 'lost'
-                                  ? 'bg-amber-100 text-amber-800'
-                                  : 'bg-emerald-100 text-emerald-800'
+                                  ? 'ink-stamp-lost'
+                                  : 'ink-stamp-found'
                               }`}
                             >
                               {item.type}
@@ -307,30 +305,29 @@ const Admin = () => {
                           <td className="py-4 px-6">
                             <div className="flex items-center gap-1.5">
                               <span
-                                className={`px-2.5 py-1 rounded-full text-xs font-bold ${
+                                className={`ink-stamp text-[10px] ${
                                   isClaimed 
-                                    ? 'bg-slate-200 text-slate-700' 
+                                    ? 'ink-stamp-claimed' 
                                     : item.status === 'pending'
-                                    ? 'bg-amber-100 text-amber-700'
-                                    : 'bg-blue-100 text-blue-800'
+                                    ? 'ink-stamp-pending'
+                                    : 'ink-stamp-found'
                                 }`}
                               >
                                 {isClaimed ? 'Claimed' : item.status === 'pending' ? 'Pending' : 'Active'}
                               </span>
                               {isFlagged && (
-                                <span className="px-2.5 py-1 bg-red-100 text-red-800 rounded-full text-xs font-bold flex items-center gap-1">
-                                  <Flag className="w-3 h-3" /> Flagged
+                                <span className="ink-stamp text-[10px] ink-stamp-lost">
+                                  Flagged
                                 </span>
                               )}
                             </div>
                           </td>
 
                           <td className="py-4 px-6 text-right">
-                            <div className="flex items-center justify-end gap-2">
+                            <div className="flex items-center justify-end gap-2 text-[10px]">
                               <Link
                                 to={`/items/${itemId}`}
-                                className="px-3 py-1.5 bg-blue-50 hover:bg-blue-600 text-blue-700 hover:text-white rounded-xl text-xs font-bold border border-blue-200 transition-all flex items-center gap-1 cursor-pointer"
-                                title="View item details"
+                                className="px-3 py-1 bg-transparent hover:bg-[#B2AC88]/20 text-[#333333] border border-[#898989] font-bold uppercase transition-all flex items-center gap-1"
                               >
                                 View
                               </Link>
@@ -338,24 +335,20 @@ const Admin = () => {
                               <button
                                 onClick={() => handleFlagItem(itemId)}
                                 disabled={actionLoadingId === itemId}
-                                className={`px-3 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1 transition-all cursor-pointer ${
+                                className={`px-3 py-1 font-bold flex items-center gap-1 transition-all cursor-pointer uppercase ${
                                   isFlagged
-                                    ? 'bg-amber-100 text-amber-800 border border-amber-300'
-                                    : 'bg-slate-100 hover:bg-amber-50 text-slate-700 hover:text-amber-700 border border-slate-200'
+                                    ? 'bg-[#B2AC88]/30 border border-[#898989] text-[#333333]'
+                                    : 'bg-transparent hover:bg-amber-50 text-slate-700 hover:text-amber-800 border border-[#898989]'
                                 }`}
-                                title="Flag this post"
                               >
-                                <Flag className="w-3.5 h-3.5" />
                                 {isFlagged ? 'Flagged' : 'Flag'}
                               </button>
 
                               <button
                                 onClick={() => setItemToRemove(item)}
                                 disabled={actionLoadingId === itemId}
-                                className="px-3 py-1.5 bg-red-50 hover:bg-red-600 text-red-700 hover:text-white rounded-xl text-xs font-bold border border-red-200 transition-all flex items-center gap-1 cursor-pointer"
-                                title="Remove this post"
+                                className="px-3 py-1 bg-transparent hover:bg-red-50 text-red-700 border border-red-700 font-bold transition-all flex items-center gap-1 cursor-pointer uppercase"
                               >
-                                <Trash2 className="w-3.5 h-3.5" />
                                 Remove
                               </button>
                             </div>

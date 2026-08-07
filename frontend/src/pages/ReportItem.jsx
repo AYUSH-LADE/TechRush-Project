@@ -3,9 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import api from '../api/axios';
 import {
   UploadCloud,
-  FileText,
-  MapPin,
-  Tag,
   HelpCircle,
   ShieldCheck,
   CheckCircle,
@@ -141,7 +138,6 @@ const ReportItem = () => {
         },
       });
 
-      // On success, redirect to /dashboard per requirements
       navigate('/dashboard');
     } catch (err) {
       console.error('Failed to submit item:', err);
@@ -154,28 +150,28 @@ const ReportItem = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50/50 py-10 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-[#F2F0EF] py-10 px-4 sm:px-6 lg:px-8 text-[#333333]">
       <div className="max-w-3xl mx-auto">
         
         {/* Header */}
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-blue-50 text-blue-600 mb-3 border border-blue-100">
-            <PlusCircle className="w-7 h-7 stroke-[2.5]" />
+          <div className="inline-flex items-center justify-center w-12 h-12 border border-[#898989] text-[#4B6E48] mb-3 bg-[#F2F0EF]">
+            <PlusCircle className="w-6 h-6 stroke-[2]" />
           </div>
-          <h1 className="text-3xl font-extrabold text-slate-900 tracking-tight">
-            Report a Lost or Found Item
+          <h1 className="text-3xl font-serif font-extrabold text-[#333333] uppercase">
+            Log Property Report
           </h1>
-          <p className="text-sm font-medium text-slate-500 mt-1 max-w-md mx-auto">
-            Provide key details so students and campus administration can help identify and return the item.
+          <p className="text-xs font-mono text-[#898989] mt-1 max-w-md mx-auto uppercase">
+            Provide details to register this entry into the campus log book.
           </p>
         </div>
 
         {/* Card Form */}
-        <div className="bg-white rounded-3xl border border-slate-200/80 shadow-xl p-6 sm:p-10">
+        <div className="bg-[#F2F0EF] border border-[#898989] rounded-none p-6 sm:p-10">
           
           {error && (
-            <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-2xl flex items-start gap-3 text-red-700 text-sm">
-              <AlertCircle className="w-5 h-5 shrink-0 mt-0.5" />
+            <div className="mb-6 p-4 bg-red-50/20 border border-red-700 flex items-start gap-3 text-red-800 text-xs font-mono">
+              <AlertCircle className="w-4 h-4 shrink-0 mt-0.5 text-red-700" />
               <span>{error}</span>
             </div>
           )}
@@ -184,33 +180,33 @@ const ReportItem = () => {
             
             {/* Visual Lost / Found Toggle */}
             <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-3">
-                Report Type <span className="text-red-500">*</span>
+              <label className="block text-[10px] font-mono font-bold uppercase tracking-wider text-[#898989] mb-3">
+                Report Type <span className="text-red-700">*</span>
               </label>
               <div className="grid grid-cols-2 gap-4">
                 <button
                   type="button"
                   onClick={() => setFormData({ ...formData, type: 'lost' })}
-                  className={`p-4 rounded-2xl border-2 flex items-center justify-center gap-3 transition-all cursor-pointer ${
+                  className={`p-4 rounded-none border flex items-center justify-center gap-3 transition-all cursor-pointer font-mono text-xs uppercase ${
                     formData.type === 'lost'
-                      ? 'border-amber-500 bg-amber-50/70 text-amber-900 shadow-md font-bold'
-                      : 'border-slate-200 bg-slate-50 text-slate-600 hover:border-slate-300 font-semibold'
+                      ? 'border-[#898989] bg-[#B2AC88]/30 text-[#333333] font-bold'
+                      : 'border-[#898989] bg-transparent text-[#898989]'
                   }`}
                 >
-                  <HelpCircle className={`w-5 h-5 ${formData.type === 'lost' ? 'text-amber-600' : 'text-slate-400'}`} />
+                  <HelpCircle className="w-4 h-4" />
                   <span>I Lost Something</span>
                 </button>
 
                 <button
                   type="button"
                   onClick={() => setFormData({ ...formData, type: 'found' })}
-                  className={`p-4 rounded-2xl border-2 flex items-center justify-center gap-3 transition-all cursor-pointer ${
+                  className={`p-4 rounded-none border flex items-center justify-center gap-3 transition-all cursor-pointer font-mono text-xs uppercase ${
                     formData.type === 'found'
-                      ? 'border-emerald-500 bg-emerald-50/70 text-emerald-900 shadow-md font-bold'
-                      : 'border-slate-200 bg-slate-50 text-slate-600 hover:border-slate-300 font-semibold'
+                      ? 'border-[#4B6E48] bg-[#4B6E48] text-[#F2F0EF] font-bold'
+                      : 'border-[#898989] bg-transparent text-[#898989]'
                   }`}
                 >
-                  <ShieldCheck className={`w-5 h-5 ${formData.type === 'found' ? 'text-emerald-600' : 'text-slate-400'}`} />
+                  <ShieldCheck className="w-4 h-4" />
                   <span>I Found Something</span>
                 </button>
               </div>
@@ -218,36 +214,36 @@ const ReportItem = () => {
 
             {/* Title */}
             <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2">
-                Item Title <span className="text-red-500">*</span>
+              <label className="block text-[10px] font-mono font-bold uppercase tracking-wider text-[#898989] mb-2">
+                Item Title <span className="text-red-700">*</span>
               </label>
               <input
                 type="text"
                 name="title"
                 required
-                placeholder="e.g. Blue Hydro Flask, Silver MacBook Air, Black Wallet"
+                placeholder="e.g. Silver MacBook Air, Black Wallet"
                 value={formData.title}
                 onChange={handleChange}
-                className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-600 transition-all"
+                className="w-full px-4 py-2.5 bg-[#F2F0EF] border border-[#898989] rounded-none text-xs font-mono text-[#333333] placeholder-[#898989] focus:outline-none focus:border-[#4B6E48] transition-all"
               />
             </div>
 
             {/* Category & Location Grid */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2">
-                  Category <span className="text-red-500">*</span>
+                <label className="block text-[10px] font-mono font-bold uppercase tracking-wider text-[#898989] mb-2">
+                  Category <span className="text-red-700">*</span>
                 </label>
                 <div className="relative">
                   <select
                     name="category"
                     value={formData.category}
                     onChange={handleChange}
-                    className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-600 transition-all appearance-none cursor-pointer"
+                    className="w-full px-4 py-2.5 bg-[#F2F0EF] border border-[#898989] rounded-none text-xs font-mono text-[#333333] focus:outline-none focus:border-[#4B6E48] transition-all appearance-none cursor-pointer"
                   >
                     {CATEGORIES.map((cat) => (
                       <option key={cat} value={cat}>
-                        {cat}
+                        {cat.toUpperCase()}
                       </option>
                     ))}
                   </select>
@@ -255,19 +251,19 @@ const ReportItem = () => {
               </div>
 
               <div>
-                <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2">
-                  Location <span className="text-red-500">*</span>
+                <label className="block text-[10px] font-mono font-bold uppercase tracking-wider text-[#898989] mb-2">
+                  Location <span className="text-red-700">*</span>
                 </label>
                 <div className="relative">
                   <select
                     name="location"
                     value={formData.location}
                     onChange={handleChange}
-                    className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-600 transition-all appearance-none cursor-pointer"
+                    className="w-full px-4 py-2.5 bg-[#F2F0EF] border border-[#898989] rounded-none text-xs font-mono text-[#333333] focus:outline-none focus:border-[#4B6E48] transition-all appearance-none cursor-pointer"
                   >
                     {LOCATIONS.map((loc) => (
                       <option key={loc} value={loc}>
-                        {loc}
+                        {loc.toUpperCase()}
                       </option>
                     ))}
                   </select>
@@ -277,24 +273,24 @@ const ReportItem = () => {
 
             {/* Description */}
             <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2">
-                Detailed Description <span className="text-red-500">*</span>
+              <label className="block text-[10px] font-mono font-bold uppercase tracking-wider text-[#898989] mb-2">
+                Detailed Description <span className="text-red-700">*</span>
               </label>
               <textarea
                 name="description"
                 rows={4}
                 required
-                placeholder="Include identifying details such as brand, stickers, color tone, or unique marks..."
+                placeholder="Include identifying details such as brand, color tone, or unique marks..."
                 value={formData.description}
                 onChange={handleChange}
-                className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-600 transition-all"
+                className="w-full px-4 py-2.5 bg-[#F2F0EF] border border-[#898989] rounded-none text-xs font-mono text-[#333333] placeholder-[#898989] focus:outline-none focus:border-[#4B6E48] transition-all"
               ></textarea>
             </div>
 
             {/* Image Upload Area */}
             <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2">
-                Item Image <span className="text-slate-400 font-normal lowercase">(optional)</span>
+              <label className="block text-[10px] font-mono font-bold uppercase tracking-wider text-[#898989] mb-2">
+                Item Image <span className="text-[#898989] font-normal lowercase">(optional)</span>
               </label>
               
               {!imagePreview ? (
@@ -303,11 +299,7 @@ const ReportItem = () => {
                   onDragLeave={handleDrag}
                   onDragOver={handleDrag}
                   onDrop={handleDrop}
-                  className={`border-2 border-dashed rounded-2xl p-8 text-center transition-all cursor-pointer ${
-                    dragActive
-                      ? 'border-blue-500 bg-blue-50/50'
-                      : 'border-slate-200 bg-slate-50/50 hover:border-slate-300 hover:bg-slate-50'
-                  }`}
+                  className={`border border-dashed border-[#898989] p-8 text-center transition-all cursor-pointer rounded-none bg-transparent`}
                 >
                   <input
                     type="file"
@@ -317,19 +309,19 @@ const ReportItem = () => {
                     className="hidden"
                   />
                   <label htmlFor="image-upload-input" className="cursor-pointer block">
-                    <div className="w-12 h-12 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center mx-auto mb-3">
-                      <UploadCloud className="w-6 h-6" />
+                    <div className="w-10 h-10 border border-[#898989] text-[#898989] flex items-center justify-center mx-auto mb-3 bg-[#F2F0EF]">
+                      <UploadCloud className="w-5 h-5" />
                     </div>
-                    <p className="text-sm font-bold text-slate-800">
-                      Click to upload or drag and drop
+                    <p className="text-xs font-mono font-bold text-[#333333] uppercase">
+                      Select image to upload
                     </p>
-                    <p className="text-xs text-slate-400 mt-1">
+                    <p className="text-[10px] font-mono text-[#898989] mt-1 uppercase">
                       PNG, JPG, JPEG or WEBP up to 5MB
                     </p>
                   </label>
                 </div>
               ) : (
-                <div className="relative rounded-2xl overflow-hidden border border-slate-200 max-h-64 bg-slate-900 flex items-center justify-center">
+                <div className="relative rounded-none overflow-hidden border border-[#898989] max-h-64 bg-slate-900 flex items-center justify-center">
                   <img
                     src={imagePreview}
                     alt="Preview"
@@ -338,13 +330,13 @@ const ReportItem = () => {
                   <button
                     type="button"
                     onClick={handleRemoveImage}
-                    className="absolute top-3 right-3 p-2 bg-red-600 hover:bg-red-700 text-white rounded-full shadow-lg transition-all cursor-pointer"
+                    className="absolute top-3 right-3 p-2 bg-red-700 text-white rounded-none border border-red-700 shadow-none transition-all cursor-pointer"
                     title="Remove image"
                   >
                     <X className="w-4 h-4" />
                   </button>
-                  <div className="absolute bottom-3 left-3 bg-black/70 backdrop-blur-md text-white text-xs px-3 py-1 rounded-full font-medium flex items-center gap-1.5">
-                    <ImageIcon className="w-3.5 h-3.5" />
+                  <div className="absolute bottom-3 left-3 bg-[#F2F0EF] border border-[#898989] text-[#333333] text-[10px] px-3 py-1 font-mono flex items-center gap-1.5 uppercase">
+                    <ImageIcon className="w-3.5 h-3.5 text-[#4B6E48]" />
                     <span>Image Attached</span>
                   </div>
                 </div>
@@ -355,21 +347,20 @@ const ReportItem = () => {
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-4 px-6 bg-blue-600 hover:bg-blue-700 text-white font-bold text-sm rounded-xl shadow-lg shadow-blue-500/25 hover:shadow-xl transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed mt-4"
+              className="w-full py-4 px-6 bg-[#4B6E48] hover:bg-[#4B6E48]/90 text-[#F2F0EF] font-mono font-bold text-xs uppercase tracking-wider border border-[#4B6E48] transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-60 rounded-none mt-4"
             >
               {loading ? (
-                <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                <div className="w-4 h-4 border-2 border-[#F2F0EF] border-t-transparent rounded-full animate-spin"></div>
               ) : (
                 <>
-                  <CheckCircle className="w-5 h-5" />
-                  <span>Submit Report</span>
+                  <CheckCircle className="w-4 h-4" />
+                  <span>Register Report</span>
                 </>
               )}
             </button>
 
           </form>
         </div>
-
       </div>
     </div>
   );

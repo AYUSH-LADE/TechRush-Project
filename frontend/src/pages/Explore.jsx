@@ -4,7 +4,7 @@ import api from '../api/axios';
 import ItemCard from '../components/ItemCard';
 import ItemFilters from '../components/ItemFilters';
 import { CardSkeleton } from '../components/Loader';
-import { PlusCircle, Search, HelpCircle, AlertTriangle, RefreshCw, Sparkles, CheckCircle2 } from 'lucide-react';
+import { PlusCircle, Search, HelpCircle, AlertTriangle, RefreshCw } from 'lucide-react';
 
 const Explore = () => {
   const [items, setItems] = useState([]);
@@ -70,71 +70,62 @@ const Explore = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50/50 pb-20">
+    <div className="min-h-screen bg-[#F2F0EF] pb-20">
       
       {/* Hero Section */}
-      <section className="relative overflow-hidden bg-gradient-to-b from-blue-900 via-slate-900 to-slate-950 text-white pt-16 pb-24 px-4 sm:px-6 lg:px-8">
-        
-        {/* Glow Effects */}
-        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-blue-500/20 rounded-full blur-3xl pointer-events-none"></div>
-        <div className="absolute bottom-0 right-10 w-72 h-72 bg-indigo-500/15 rounded-full blur-3xl pointer-events-none"></div>
-        
+      <section className="relative bg-[#B2AC88]/20 border-b border-[#898989] pt-12 pb-16 px-4 sm:px-6 lg:px-8 text-[#333333]">
         <div className="relative max-w-4xl mx-auto text-center">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-500/10 border border-blue-400/20 backdrop-blur-md text-blue-300 text-xs font-semibold mb-6">
-            <Sparkles className="w-3.5 h-3.5" />
-            <span>Official Campus Lost & Found Network</span>
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 border border-[#898989] bg-[#F2F0EF] text-[#333333] font-mono text-[10px] uppercase tracking-wider mb-6">
+            <span>Official Lost Property Bulletin</span>
           </div>
 
-          <h1 className="text-4xl sm:text-6xl font-extrabold tracking-tight text-white leading-tight mb-6">
-            Lost something on campus? <br />
-            <span className="bg-gradient-to-r from-blue-400 via-indigo-300 to-sky-400 bg-clip-text text-transparent">
-              Let's help you find it.
-            </span>
+          <h1 className="text-3xl sm:text-5xl font-serif font-extrabold tracking-tight text-[#333333] leading-tight mb-6 uppercase">
+            YOUR CAMPUS RECLAIM CENTER
           </h1>
 
-          <p className="text-lg sm:text-xl text-slate-300 max-w-2xl mx-auto font-normal leading-relaxed mb-10">
-            A fast, trusted platform connecting students and faculty to report, search, and reclaim lost items across campus.
+          <p className="text-sm sm:text-base text-[#898989] font-mono max-w-xl mx-auto leading-relaxed mb-8 uppercase">
+            A central ledger system connecting the university community to log, search, and reclaim misplaced items.
           </p>
 
           {/* Hero CTAs */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
             <Link
               to="/report"
-              className="w-full sm:w-auto px-7 py-4 rounded-2xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-sm shadow-xl shadow-blue-600/30 hover:shadow-2xl hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-2"
+              className="w-full sm:w-auto px-6 py-3.5 bg-[#4B6E48] hover:bg-[#4B6E48]/90 text-[#F2F0EF] font-mono font-bold text-xs uppercase tracking-wider border border-[#4B6E48] transition-all flex items-center justify-center gap-2 cursor-pointer"
             >
-              <PlusCircle className="w-5 h-5" />
-              <span>Report Lost / Found Item</span>
+              <PlusCircle className="w-4 h-4" />
+              <span>Log Lost / Found Item</span>
             </Link>
 
             <button
               onClick={handleBrowseFound}
-              className="w-full sm:w-auto px-7 py-4 rounded-2xl bg-slate-800/80 hover:bg-slate-800 text-slate-200 border border-slate-700/80 font-bold text-sm hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-2 backdrop-blur-md cursor-pointer"
+              className="w-full sm:w-auto px-6 py-3.5 bg-transparent hover:bg-[#B2AC88]/20 text-[#333333] border border-[#898989] font-mono font-bold text-xs uppercase tracking-wider transition-all flex items-center justify-center gap-2 cursor-pointer"
             >
-              <Search className="w-5 h-5 text-blue-400" />
-              <span>Browse Found Items</span>
+              <Search className="w-4 h-4 text-[#4B6E48]" />
+              <span>Browse Found Register</span>
             </button>
           </div>
 
           {/* Quick Metrics */}
-          <div className="mt-14 pt-8 border-t border-slate-800/80 grid grid-cols-3 gap-4 max-w-xl mx-auto text-center">
+          <div className="mt-10 pt-6 border-t border-dashed border-[#898989] grid grid-cols-3 gap-4 max-w-lg mx-auto text-center font-mono">
             <div>
-              <p className="text-2xl font-black text-white">100%</p>
-              <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Verified Campus</p>
+              <p className="text-lg font-bold text-[#333333]">100%</p>
+              <p className="text-[9px] font-bold text-[#898989] uppercase tracking-widest">VERIFIED OFFICE</p>
             </div>
             <div>
-              <p className="text-2xl font-black text-blue-400">Fast</p>
-              <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Direct Contact</p>
+              <p className="text-lg font-bold text-[#4B6E48]">LOGGED</p>
+              <p className="text-[9px] font-bold text-[#898989] uppercase tracking-widest">ledger log</p>
             </div>
             <div>
-              <p className="text-2xl font-black text-emerald-400">Secure</p>
-              <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Claim Verification</p>
+              <p className="text-lg font-bold text-[#B2AC88]">SECURED</p>
+              <p className="text-[9px] font-bold text-[#898989] uppercase tracking-widest">CLAIM RECEIPTS</p>
             </div>
           </div>
         </div>
       </section>
 
       {/* Main Content Area */}
-      <main id="results-section" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-8 relative z-10">
+      <main id="results-section" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-10 relative z-10">
         
         {/* Filters Card */}
         <ItemFilters
@@ -144,13 +135,13 @@ const Explore = () => {
         />
 
         {/* Results Header */}
-        <div className="flex items-center justify-between mb-6">
+        <div className="flex items-center justify-between mb-6 border-b border-[#898989] pb-3">
           <div>
-            <h2 className="text-xl font-bold text-slate-900">
-              {filters.type ? `${filters.type.toUpperCase()} Items` : 'All Reported Items'}
+            <h2 className="text-lg font-serif font-bold text-[#333333] uppercase">
+              {filters.type ? `${filters.type} Items` : 'All Registered Items'}
             </h2>
-            <p className="text-xs font-medium text-slate-500">
-              Showing {items.length} {items.length === 1 ? 'item' : 'items'} found on campus
+            <p className="text-xs font-mono text-[#898989] uppercase mt-0.5">
+              Showing {items.length} {items.length === 1 ? 'item' : 'items'} in ledger
             </p>
           </div>
 
@@ -158,7 +149,7 @@ const Explore = () => {
           <button
             onClick={fetchItems}
             disabled={loading}
-            className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-slate-600 bg-white border border-slate-200 rounded-xl hover:bg-slate-50 transition-all cursor-pointer disabled:opacity-50"
+            className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-mono font-bold text-[#333333] bg-[#F2F0EF] border border-[#898989] hover:bg-[#B2AC88]/20 transition-all cursor-pointer disabled:opacity-50 uppercase"
             title="Refresh list"
           >
             <RefreshCw className={`w-3.5 h-3.5 ${loading ? 'animate-spin' : ''}`} />
@@ -168,15 +159,15 @@ const Explore = () => {
 
         {/* Error State */}
         {error && (
-          <div className="bg-red-50 border border-red-200 rounded-2xl p-8 text-center max-w-lg mx-auto my-8">
-            <div className="inline-flex items-center justify-center w-12 h-12 bg-red-100 text-red-600 rounded-full mb-3">
-              <AlertTriangle className="w-6 h-6" />
+          <div className="bg-[#F2F0EF] border border-[#898989] p-8 text-center max-w-lg mx-auto my-8">
+            <div className="inline-flex items-center justify-center w-10 h-10 border border-[#898989] text-red-700 bg-red-50/50 mb-3">
+              <AlertTriangle className="w-5 h-5" />
             </div>
-            <h3 className="text-base font-bold text-red-900 mb-1">Failed to fetch items</h3>
-            <p className="text-sm text-red-700 mb-4">{error}</p>
+            <h3 className="text-sm font-serif font-bold text-red-900 mb-1 uppercase">LOG_CONNECTION_FAIL</h3>
+            <p className="text-xs font-mono text-[#898989] mb-4">{error}</p>
             <button
               onClick={fetchItems}
-              className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-xl font-bold text-xs shadow-md transition-all cursor-pointer"
+              className="px-4 py-2 bg-[#4B6E48] hover:bg-[#4B6E48]/90 text-[#F2F0EF] font-mono text-xs uppercase tracking-wider transition-all cursor-pointer border border-[#4B6E48]"
             >
               Try Again
             </button>
@@ -194,24 +185,24 @@ const Explore = () => {
 
         {/* Empty State */}
         {!loading && !error && items.length === 0 && (
-          <div className="bg-white border border-slate-200 rounded-3xl p-12 text-center max-w-md mx-auto my-8 shadow-xs">
-            <div className="inline-flex items-center justify-center w-16 h-16 bg-blue-50 text-blue-600 rounded-2xl mb-4">
-              <HelpCircle className="w-8 h-8" />
+          <div className="bg-[#F2F0EF] border border-[#898989] p-10 text-center max-w-md mx-auto my-8">
+            <div className="inline-flex items-center justify-center w-12 h-12 border border-[#898989] text-[#898989] mb-4">
+              <HelpCircle className="w-6 h-6" />
             </div>
-            <h3 className="text-lg font-bold text-slate-900 mb-1">No items found</h3>
-            <p className="text-sm text-slate-500 mb-6">
-              We couldn't find any items matching your current filters. Try resetting search criteria or report a new item.
+            <h3 className="text-sm font-serif font-bold text-[#333333] mb-2 uppercase">NO_RECORDS_FOUND</h3>
+            <p className="text-xs font-mono text-[#898989] mb-6 uppercase">
+              No entries found matching filters. Adjust registry options or report a new claim below.
             </p>
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <button
                 onClick={handleResetFilters}
-                className="px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-bold transition-all cursor-pointer"
+                className="px-4 py-2 bg-transparent hover:bg-[#B2AC88]/20 text-[#333333] border border-[#898989] font-mono text-xs uppercase cursor-pointer"
               >
                 Clear Filters
               </button>
               <Link
                 to="/report"
-                className="px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-bold shadow-md transition-all"
+                className="px-4 py-2 bg-[#4B6E48] hover:bg-[#4B6E48]/90 text-[#F2F0EF] border border-[#4B6E48] text-xs font-mono uppercase tracking-wider text-center"
               >
                 Report Item
               </Link>
